@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
-const SHOP = process.env.SHOPIFY_STORE_NAME;
+const SHOP = "luciraonline";
 
 function formatMobile(raw) {
   const cleaned = raw.replace(/\D/g, "");
@@ -36,7 +36,7 @@ export async function POST(req) {
       }
     );
 
-    const otpData = await verifyRes.json();
+    const otpData = await verifyRes.json();   
 
     if (!verifyRes.ok || otpData.type !== "success") {
       return NextResponse.json(
@@ -48,19 +48,22 @@ export async function POST(req) {
     /* ===== SEARCH CUSTOMER ===== */
 
     const searchQuery = encodeURIComponent(`phone:+${formattedMobile}`);
+  
 
     const searchRes = await fetch(
       `https://${SHOP}.myshopify.com/admin/api/2024-10/customers/search.json?query=${searchQuery}`,
       {
         headers: {
           "X-Shopify-Access-Token":
-            process.env.SHOPIFY_ADMIN_TOKEN,
+            process.env.ADMIN_TOKEN,
         },
       }
     );
 
     const searchData = await searchRes.json();
     const customer = searchData.customers?.[0];
+    console.log(searchData)
+    console.log(customer)
 
     if (!customer) {
       return NextResponse.json({
@@ -79,7 +82,7 @@ export async function POST(req) {
         headers: {
           "Content-Type": "application/json",
           "X-Shopify-Access-Token":
-            process.env.SHOPIFY_ADMIN_TOKEN,
+            process.env.ADMIN_TOKEN,
         },
         body: JSON.stringify({
           customer: {
@@ -100,7 +103,7 @@ export async function POST(req) {
         headers: {
           "Content-Type": "application/json",
           "X-Shopify-Storefront-Access-Token":
-            process.env.SHOPIFY_STOREFRONT_TOKEN,
+            process.env.STOREFRONT_TOKEN,
         },
         body: JSON.stringify({
           query: `

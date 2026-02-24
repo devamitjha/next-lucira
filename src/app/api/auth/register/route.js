@@ -35,7 +35,7 @@ export async function POST(req) {
         headers: {
           "Content-Type": "application/json",
           "X-Shopify-Access-Token":
-            process.env.SHOPIFY_ADMIN_TOKEN,
+            process.env.ADMIN_TOKEN,
         },
         body: JSON.stringify({
           customer: {
@@ -63,7 +63,7 @@ export async function POST(req) {
         headers: {
           "Content-Type": "application/json",
           "X-Shopify-Storefront-Access-Token":
-            process.env.SHOPIFY_STOREFRONT_TOKEN,
+            process.env.STOREFRONT_TOKEN,
         },
         body: JSON.stringify({
           query: `

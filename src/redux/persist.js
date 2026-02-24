@@ -1,11 +1,11 @@
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 
-export const userPersistConfig = {
-  key: "user",
+export const rootPersistConfig = {
+  key: "root",
   storage,
-  whitelist: ["user", "isAuthenticated"],
+  whitelist: ["user", "cart"], // persist both
 };
 
 export const persistUserReducer = (reducer) =>
-  persistReducer(userPersistConfig, reducer);
+  persistReducer(rootPersistConfig, reducer);

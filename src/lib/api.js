@@ -1,41 +1,71 @@
+/* ================= GENERIC API FETCH ================= */
+
+const apiFetch = async (url, options = {}) => {
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    },
+  });
+
+  const contentType = res.headers.get("content-type");
+
+  let data;
+
+  if (contentType?.includes("application/json")) {
+    data = await res.json();
+  } else {
+    throw new Error("Invalid server response");
+  }
+
+  if (!res.ok) {
+    throw new Error(data?.error || "Something went wrong");
+  }
+
+  return data;
+};
 /* ================= SEND OTP ================= */
-export const sendOtpApi = async (mobile) => {
-  const res = await fetch("/api/auth/send-otp", {
+
+export const sendOtpApi = (mobile) =>
+  apiFetch("/api/auth/send-otp", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ mobile }),
   });
 
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error);
-
-  return data;
-};
-
 /* ================= VERIFY OTP ================= */
-export const verifyOtpApi = async (mobile, otp) => {
-  const res = await fetch("/api/auth/verify-otp", {
+
+export const verifyOtpApi = (mobile, otp) =>
+  apiFetch("/api/auth/verify-otp", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ mobile, otp }),
   });
 
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error);
-
-  return data;
-};
-
 /* ================= REGISTER ================= */
-export const registerCustomer = async (payload) => {
-  const res = await fetch("/api/auth/register", {
+
+export const registerCustomer = (payload) =>
+  apiFetch("/api/auth/register", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
 
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error);
+/* ================= ATTACH CART ================= */
 
-  return data;
-};
+export const attachCartApi = ({ cartId, customerAccessToken }) =>
+  apiFetch("/api/cart/attach", {
+    method: "POST",
+    body: JSON.stringify({
+      cartId,
+      customerAccessToken,
+    }),
+  });
+
+/* ================= CREATE CART ================= */
+
+export const createCartApi = (customerAccessToken) =>
+  apiFetch("/api/cart/create", {
+    method: "POST",
+    body: JSON.stringify({
+      customerAccessToken,
+    }),
+  });
