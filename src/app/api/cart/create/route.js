@@ -4,9 +4,14 @@ const SHOP = "luciraonline";
 
 export async function POST(req) {
   try {
-    const { customerAccessToken } = await req.json();
+    const body = await req.json().catch(() => ({}));
+    const { customerAccessToken } = body;
 
-    if (!customerAccessToken) {
+    // try cookie if body did not include one
+    const token =
+      customerAccessToken || req.cookies.get("customerAccessToken")?.value;
+
+    if (!token) {
       return NextResponse.json(
         { error: "Missing token" },
         { status: 400 }
@@ -28,7 +33,7 @@ export async function POST(req) {
               cartCreate(
                 input: {
                   buyerIdentity: {
-                    customerAccessToken: "${customerAccessToken}"
+                    customerAccessToken: "${token}"
                   }
                 }
               ) {

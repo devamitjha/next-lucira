@@ -68,20 +68,15 @@ export function AuthDialog({ open, onOpenChange, initialMobile = "" }) {
           data.user?.first_name && data.user?.last_name
             ? `${data.user.first_name} ${data.user.last_name}`
             : "User",
-        token: data.token,
       })
     );
 
     try {
       if (existingCartId) {
-        const updatedCart = await attachCartApi({
-          cartId: existingCartId,
-          customerAccessToken: data.token,
-        });
-
+        const updatedCart = await attachCartApi({ cartId: existingCartId });
         dispatch(setCart(updatedCart));
       } else {
-        const newCart = await createCartApi(data.token);
+        const newCart = await createCartApi();
         dispatch(setCart(newCart));
       }
     } catch (err) {

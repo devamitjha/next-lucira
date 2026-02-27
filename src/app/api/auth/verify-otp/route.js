@@ -128,11 +128,31 @@ export async function POST(req) {
       loginData?.data?.customerAccessTokenCreate
         ?.customerAccessToken;
 
+    // set httpOnly cookie so browser will send it automatically
+    if (token?.accessToken) {
+      // calculate maxAge from expiration
+      const expiresAt = new Date(token.expiresAt);
+      const maxAge = Math.max(
+        0,
+        Math.floor((expiresAt.getTime() - Date.now()) / 1000)
+      );
+      const res = NextResponse.json({
+        status: "LOGIN",
+        user: customer,
+        expiresAt: token?.expiresAt, // return for client info only
+      });
+      res.cookies.set("customerAccessToken", token.accessToken, {
+        httpOnly: true,
+        path: "/",
+        maxAge,
+      });
+      return res;
+    }
+
+    // fallback if token is missing for some reason
     return NextResponse.json({
       status: "LOGIN",
       user: customer,
-      token: token?.accessToken,
-      expiresAt: token?.expiresAt,
     });
 
   } catch (err) {

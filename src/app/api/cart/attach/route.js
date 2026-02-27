@@ -4,10 +4,14 @@ const SHOP = "luciraonline";
 
 export async function POST(req) {
   try {
-    const { cartId, customerAccessToken } =
-      await req.json();
+    const body = await req.json().catch(() => ({}));
+    const { cartId, customerAccessToken } = body;
 
-    if (!cartId || !customerAccessToken) {
+    // fall back to cookie when available
+    const token =
+      customerAccessToken || req.cookies.get("customerAccessToken")?.value;
+
+    if (!cartId || !token) {
       return NextResponse.json(
         { error: "Missing data" },
         { status: 400 }
@@ -29,7 +33,7 @@ export async function POST(req) {
               cartBuyerIdentityUpdate(
                 cartId: "${cartId}"
                 buyerIdentity: {
-                  customerAccessToken: "${customerAccessToken}"
+                  customerAccessToken: "${token}"
                 }
               ) {
                 cart {

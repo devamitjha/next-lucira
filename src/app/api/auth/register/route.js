@@ -88,11 +88,28 @@ export async function POST(req) {
       loginData?.data?.customerAccessTokenCreate
         ?.customerAccessToken;
 
+    if (token?.accessToken) {
+      const expiresAt = new Date(token.expiresAt);
+      const maxAge = Math.max(
+        0,
+        Math.floor((expiresAt.getTime() - Date.now()) / 1000)
+      );
+      const res = NextResponse.json({
+        status: "REGISTER_SUCCESS",
+        user: customer,
+        expiresAt: token?.expiresAt,
+      });
+      res.cookies.set("customerAccessToken", token.accessToken, {
+        httpOnly: true,
+        path: "/",
+        maxAge,
+      });
+      return res;
+    }
+
     return NextResponse.json({
       status: "REGISTER_SUCCESS",
       user: customer,
-      token: token?.accessToken,
-      expiresAt: token?.expiresAt,
     });
 
   } catch (err) {

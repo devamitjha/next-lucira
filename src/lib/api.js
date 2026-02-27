@@ -2,6 +2,7 @@
 
 const apiFetch = async (url, options = {}) => {
   const res = await fetch(url, {
+    credentials: "include",
     ...options,
     headers: {
       "Content-Type": "application/json",
@@ -51,21 +52,17 @@ export const registerCustomer = (payload) =>
 
 /* ================= ATTACH CART ================= */
 
-export const attachCartApi = ({ cartId, customerAccessToken }) =>
+export const attachCartApi = ({ cartId }) =>
   apiFetch("/api/cart/attach", {
     method: "POST",
-    body: JSON.stringify({
-      cartId,
-      customerAccessToken,
-    }),
+    body: JSON.stringify({ cartId }),
   });
 
 /* ================= CREATE CART ================= */
 
-export const createCartApi = (customerAccessToken) =>
+export const createCartApi = () =>
   apiFetch("/api/cart/create", {
     method: "POST",
-    body: JSON.stringify({
-      customerAccessToken,
-    }),
+    // server will grab the access token from the httpOnly cookie
+    body: JSON.stringify({}),
   });

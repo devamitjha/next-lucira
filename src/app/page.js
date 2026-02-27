@@ -2,7 +2,7 @@
 
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "@/redux/features/user/userSlice";
-import LoginDialog from "@/components/auth/LoginDialog";
+import { AuthDialog } from "@/components/auth/AuthDialog";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -15,16 +15,23 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center">
       {isAuthenticated ? (
         <div className="space-y-4 text-center">
-          <p>Welcome {user?.email}</p>
+          <p>Welcome {user?.email || user?.name}</p>
           <Button
             variant="destructive"
-            onClick={() => dispatch(logout())}
+            onClick={async () => {
+              try {
+                await fetch("/api/auth/logout", { method: "POST" });
+              } catch (err) {
+                console.error("failed to clear cookie", err);
+              }
+              dispatch(logout());
+            }}
           >
             Logout
           </Button>
         </div>
       ) : (
-        <LoginDialog />
+        <AuthDialog />
       )}
     </div>
   );
