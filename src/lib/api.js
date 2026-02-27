@@ -66,3 +66,43 @@ export const createCartApi = () =>
     // server will grab the access token from the httpOnly cookie
     body: JSON.stringify({}),
   });
+
+/* ================= COLLECTION PRODUCTS ================= */
+
+export const fetchCollectionProducts = async (params) => {
+  const q = new URLSearchParams();
+
+  q.set("handle", params.handle);
+  q.set("limit", params.limit || 20);
+
+  if (params.cursor) q.set("cursor", params.cursor);
+  if (params.sort) q.set("sort", params.sort);
+  if (params.filters !== undefined) {
+    q.set("filters", params.filters);
+  }
+
+  const url = `/api/collection?${q.toString()}`;
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch products");
+  }
+
+  return res.json();
+};
+
+/* ================= COLLECTION FILTERS ================= */
+
+export const fetchCollectionFilters = async (handle) => {
+  if (!handle) {
+    return { filters: {} };
+  }
+
+  const res = await fetch(`/api/collection/filters?handle=${handle}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch filters");
+  }
+
+  return res.json();
+};
