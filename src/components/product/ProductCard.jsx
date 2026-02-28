@@ -144,6 +144,7 @@ export default function ProductCard({ product, showAddToCart = true }) {
                     alt={product.title}
                     width={300}
                     height={300}
+                    priority={idx === 0}
                     className="w-full h-full object-cover"
                   />
                 </SwiperSlide>
