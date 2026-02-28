@@ -4,6 +4,7 @@ import Header from "@/components/header/Header";
 import ReduxProvider from "@/redux/provider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import QueryProvider from "@/providers/QueryProvider";
 
 const futura = localFont({
   src: [
@@ -36,8 +37,10 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${futura.className} antialiased`}>
         <ReduxProvider>
-          <Header />
-          {children}
+          <QueryProvider> 
+            <Header />
+            {children}
+          </QueryProvider>
         </ReduxProvider>
          <ToastContainer
           position="top-right"

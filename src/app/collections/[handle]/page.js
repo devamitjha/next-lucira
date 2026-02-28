@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useParams } from "next/navigation";
 import ProductCard from "@/components/product/ProductCard";
 import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
@@ -14,6 +14,7 @@ import { fetchCollectionProducts, fetchCollectionFilters } from "@/lib/api";
 import { ChevronDown, XIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 const SORT_OPTIONS = [
   { value: "best_selling", label: "Best Selling" },
@@ -24,72 +25,67 @@ const SORT_OPTIONS = [
 
 export default function CollectionPage() {
   const params = useParams();
-  const handle = params?.handle || "all";
-
-  const [products, setProducts] = useState([]);
-  const [filters, setFilters] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [cursor, setCursor] = useState(null);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [totalProducts, setTotalProducts] = useState(0);
-  const [pagesLoaded, setPagesLoaded] = useState(0);
-
+  const handle = params?.handle || "all"; 
   const [activeSort, setActiveSort] = useState("best_selling");
   const [selectedFilters, setSelectedFilters] = useState({});
+
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["collection", handle, activeSort, selectedFilters],
+
+    queryFn: async ({ pageParam = null }) => {
+      return fetchCollectionProducts({
+        handle,
+        limit: 19,
+        cursor: pageParam,
+        sort: activeSort,
+        filters: JSON.stringify(selectedFilters),
+      });
+    },
+
+    getNextPageParam: (lastPage) =>
+      lastPage.pageInfo?.hasNextPage
+        ? lastPage.pageInfo.endCursor
+        : undefined,
+    staleTime: 1000 * 60 * 60,   // 1 hour
+    gcTime: 1000 * 60 * 60,      // 1 hour (v5)
+  });
+
+  const products =
+    data?.pages?.flatMap((page) => page.products) ?? [];
+ 
+  const totalProducts =
+    data?.pages?.[0]?.totalProducts || 0;
+
+  const filters = useMemo(() => {
+    return data?.pages?.[0]?.filters || {};
+  }, [data]);
   
   // Track which filter groups are expanded. Only "In Store Available" open by default.
   // We'll rebuild this whenever the available filters change so every group has an explicit value.
   const [expandedFilters, setExpandedFilters] = useState({});
 
-  // Fetch products
-  const fetchProducts = useCallback(
-    async (newCursor = null) => {
-      try {
-        setLoading(true);
-        const data = await fetchCollectionProducts({
-          handle,
-          limit: 19,
-          cursor: newCursor,
-          sort: activeSort,
-          filters: JSON.stringify(selectedFilters),
-        });
-
-        if (newCursor) {
-          setProducts((prev) => [...prev, ...data.products]);
-          setPagesLoaded((prev) => (prev > 0 ? prev + 1 : 2));
-        } else {
-          setProducts(data.products);
-          setPagesLoaded(1);
-        }
-
-        setFilters(data.filters || {});
-        setCursor(data.pageInfo?.endCursor || null);
-        setHasNextPage(data.pageInfo?.hasNextPage || false);
-        setTotalProducts(data.totalProducts || 0);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [handle, activeSort, selectedFilters]
-  );
-
-  // Initial load and when filters/sort change
-  useEffect(() => {
-    setProducts([]);
-    setCursor(null);
-    setPagesLoaded(0);
-    fetchProducts(null);
-  }, [activeSort, selectedFilters, handle]);
-
+ 
   // whenever the available filter groups change, reset expansion state
   useEffect(() => {
-    const init = {};
-    Object.keys(filters).forEach((groupKey) => {
-      init[groupKey] = groupKey === "In Store Available";
+    if (!filters || Object.keys(filters).length === 0) return;
+
+    setExpandedFilters((prev) => {
+      // Prevent re-setting if already initialized
+      if (Object.keys(prev).length > 0) return prev;
+
+      const init = {};
+      Object.keys(filters).forEach((groupKey) => {
+        init[groupKey] = groupKey === "In Store Available";
+      });
+
+      return init;
     });
-    setExpandedFilters(init);
   }, [filters]);
 
   const handleSort = (value) => {
@@ -127,54 +123,50 @@ export default function CollectionPage() {
   // Build grid items and inject promotional image at 3rd and 7th position of each page
   const renderGridItems = () => {
     const items = [];
-    const productsPerPage = 19; // as configured in fetchProducts limit
-
-    // base positions on the first page (1-based)
+    const productsPerPage = 19;
     const basePositions = [3, 7];
 
-    // number of pages based on loaded pages or product count
-    const pages = pagesLoaded > 0 ? pagesLoaded : Math.max(1, Math.ceil(products.length / productsPerPage));
+    const pages = Math.max(
+      1,
+      Math.ceil(products.length / productsPerPage)
+    );
 
-    // build a set of global positions where images should appear
     const imagePositions = new Set();
+
     for (let p = 0; p < pages; p++) {
       basePositions.forEach((bp) => {
         imagePositions.add(bp + p * productsPerPage);
       });
     }
 
-    // iterate products with their global 1-based position and inject images at matching positions
     for (let idx = 0; idx < products.length; idx++) {
-      const globalPos = idx + 1; // 1-based
+      const globalPos = idx + 1;
 
       if (imagePositions.has(globalPos)) {
         items.push(
-          <div key={`inpage-${globalPos}`} className="overflow-hidden rounded-lg">
-            <Image src="/images/inpage.jpg" alt="Promo" width={800} height={400} className="w-full h-full object-cover rounded-lg" />
+          <div
+            key={`inpage-${globalPos}`}
+            className="overflow-hidden rounded-lg"
+          >
+            <Image
+              src="/images/inpage.jpg"
+              alt="Promo"
+              width={800}
+              height={400}
+              className="w-full h-full object-cover rounded-lg"
+            />
           </div>
         );
       }
 
       const prod = products[idx];
-      items.push(<ProductCard key={prod.id} product={prod} showAddToCart={false} />);
-    }
-
-    // If there are image positions beyond the current products (e.g., when page skeletons show), ensure images render for those positions too
-    // This handles the case where pagesLoaded > computed pages from products length (during pagination loading)
-    if (pagesLoaded > Math.ceil(products.length / productsPerPage)) {
-      // compute any image positions that fall after current products and render placeholders
-      for (let p = 0; p < pages; p++) {
-        basePositions.forEach((bp) => {
-          const pos = bp + p * productsPerPage;
-          if (pos > products.length && imagePositions.has(pos)) {
-            items.push(
-              <div key={`inpage-future-${pos}`} className="overflow-hidden rounded-lg">
-                <Image src="/images/inpage.jpg" alt="Promo" width={800} height={400} className="w-full h-full object-cover rounded-lg" />
-              </div>
-            );
-          }
-        });
-      }
+      items.push(
+        <ProductCard
+          key={prod.id}
+          product={prod}
+          showAddToCart={false}
+        />
+      );
     }
 
     return items;
@@ -203,7 +195,7 @@ export default function CollectionPage() {
                   )}
                 </div>
 
-                {loading && Object.keys(filters).length === 0 ? (
+                {isLoading && Object.keys(filters).length === 0 ? (
                   <div className="space-y-4">
                     {Array.from({ length: 8 }).map((_, i) => (
                       <div key={i} className="h-4 bg-gray-200 rounded w-full animate-pulse" />
@@ -291,7 +283,7 @@ export default function CollectionPage() {
                         Clear All ({totalAppliedCount})
                       </Button>
                     )}
-                    {loading && Object.keys(filters).length === 0 ? (
+                    {isLoading && Object.keys(filters).length === 0 ? (
                       <div className="space-y-4">
                         {Array.from({ length: 4 }).map((_, i) => (
                           <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
@@ -393,7 +385,7 @@ export default function CollectionPage() {
           )}
 
           {/* Products Grid */}
-          {loading && products.length === 0 ? (
+          {isLoading && products.length === 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
@@ -406,7 +398,7 @@ export default function CollectionPage() {
               </div>
 
               {/* Pagination skeletons when loading next page */}
-              {loading && hasNextPage && (
+              {isLoading && hasNextPage && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <ProductCardSkeleton key={`p-${i}`} />
@@ -417,7 +409,13 @@ export default function CollectionPage() {
               {/* Load More Button */}
               {hasNextPage && (
                 <div className="flex justify-center py-8">
-                  <Button onClick={() => fetchProducts(cursor)} disabled={loading} size="lg">{loading ? "Loading..." : "Load More"}</Button>
+                  <Button
+                    onClick={() => fetchNextPage()}
+                    disabled={isFetchingNextPage}
+                    size="lg"
+                  >
+                    {isFetchingNextPage ? "Loading..." : "Load More"}
+                  </Button>
                 </div>
               )}
             </>
