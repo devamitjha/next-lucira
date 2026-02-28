@@ -12,6 +12,7 @@ import Loader from "@/components/common/Loader";
 import { fetchCollectionProducts, fetchCollectionFilters } from "@/lib/api";
 import { ChevronDown, XIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const SORT_OPTIONS = [
   { value: "best_selling", label: "Best Selling" },
@@ -126,79 +127,83 @@ export default function CollectionPage() {
         <p className="text-gray-600 mt-2">{totalProducts} products</p>
       </div>
 
-      <div className="flex gap-6 p-6 max-w-7xl mx-auto">
+      <div className="flex gap-12 py-6 max-w-350 mx-auto">
         {/* ================= FILTERS SIDEBAR ================= */}
-        <div className="hidden lg:block w-64 shrink-0">
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold mb-3">Filters</h3>
-              {totalAppliedCount > 0 && (
-                <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-xs mb-4">
-                  Clear All ({totalAppliedCount})
-                </Button>
-              )}
-            </div>
+        <div className="hidden lg:block w-78 shrink-0">
+          <div className="sticky top-5 self-start h-fit">
+            <ScrollArea className="w-full h-[calc(100vh-5rem)]">
+              <div className="space-y-6 px-4">
+                <div>
+                  <h3 className="font-semibold mb-3">Filters</h3>
+                  {totalAppliedCount > 0 && (
+                    <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-xs mb-4">
+                      Clear All ({totalAppliedCount})
+                    </Button>
+                  )}
+                </div>
 
-            {loading && Object.keys(filters).length === 0 ? (
-              <div className="space-y-4">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
-                ))}
-              </div>
-            ) : (
-              <>
-                {Object.entries(filters).map(([groupKey, options]) => {
-                  const isExpanded = expandedFilters[groupKey] ?? false;
+                {loading && Object.keys(filters).length === 0 ? (
+                  <div className="space-y-4">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+                    ))}
+                  </div>
+                ) : (
+                  <>
+                    {Object.entries(filters).map(([groupKey, options]) => {
+                      const isExpanded = expandedFilters[groupKey] ?? false;
 
-                  return (
-                    <div key={groupKey} className="border-b pb-4">
-                      {/* Filter Title with Chevron */}
-                      <button
-                        onClick={() => toggleFilterExpand(groupKey)}
-                        className="w-full flex items-center justify-between py-2 hover:opacity-70 transition-opacity hover:cursor-pointer"
-                      >
-                        <h4 className="font-medium text-sm capitalize">{groupKey}</h4>
-                        <ChevronDown
-                          size={18}
-                          className={`transition-transform duration-300 ${
-                            isExpanded ? "rotate-0" : "rotate-180"
-                          }`}
-                        />
-                      </button>
+                      return (
+                        <div key={groupKey} className="border-b pb-4">
+                          {/* Filter Title with Chevron */}
+                          <button
+                            onClick={() => toggleFilterExpand(groupKey)}
+                            className="w-full flex items-center justify-between py-2 hover:opacity-70 transition-opacity hover:cursor-pointer"
+                          >
+                            <h4 className="font-medium text-sm capitalize">{groupKey}</h4>
+                            <ChevronDown
+                              size={18}
+                              className={`transition-transform duration-300 ${
+                                isExpanded ? "rotate-0" : "rotate-180"
+                              }`}
+                            />
+                          </button>
 
-                      {/* Filter Options - Collapsible */}
-                      {isExpanded && (
-                        <div className="space-y-2 mt-3">
-                          {Array.isArray(options) &&
-                            options.map((option) => {
-                              const isSelected = selectedFilters[groupKey]?.some(
-                                (o) => o.label === option.label
-                              );
+                          {/* Filter Options - Collapsible */}
+                          {isExpanded && (
+                            <div className="space-y-2 mt-3">
+                              {Array.isArray(options) &&
+                                options.map((option) => {
+                                  const isSelected = selectedFilters[groupKey]?.some(
+                                    (o) => o.label === option.label
+                                  );
 
-                              return (
-                                <div key={option.label} className="flex items-center gap-2">
-                                  <Checkbox
-                                    id={`${groupKey}-${option.label}`}
-                                    checked={isSelected}
-                                    onCheckedChange={() => toggleFilter(groupKey, option)}
-                                  />
-                                  <label
-                                    htmlFor={`${groupKey}-${option.label}`}
-                                    className="text-sm cursor-pointer flex-1"
-                                  >
-                                    {option.label}
-                                  </label>
-                                  <span className="text-xs text-gray-500">{option.count}</span>
-                                </div>
-                              );
-                            })}
+                                  return (
+                                    <div key={option.label} className="flex items-center gap-2">
+                                      <Checkbox
+                                        id={`${groupKey}-${option.label}`}
+                                        checked={isSelected}
+                                        onCheckedChange={() => toggleFilter(groupKey, option)}
+                                      />
+                                      <label
+                                        htmlFor={`${groupKey}-${option.label}`}
+                                        className="text-sm cursor-pointer flex-1"
+                                      >
+                                        {option.label}
+                                      </label>
+                                      <span className="text-xs text-gray-500">{option.count}</span>
+                                    </div>
+                                  );
+                                })}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </>
-            )}
+                      );
+                    })}
+                  </>
+                )}
+              </div>
+            </ScrollArea>
           </div>
         </div>
 
