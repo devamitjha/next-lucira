@@ -3,13 +3,15 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import ProductCard from "@/components/product/ProductCard";
+import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Checkbox } from "@/components/ui/checkbox";
 import Loader from "@/components/common/Loader";
 import { fetchCollectionProducts, fetchCollectionFilters } from "@/lib/api";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, XIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const SORT_OPTIONS = [
   { value: "best_selling", label: "Best Selling" },
@@ -31,6 +33,10 @@ export default function CollectionPage() {
 
   const [activeSort, setActiveSort] = useState("best_selling");
   const [selectedFilters, setSelectedFilters] = useState({});
+  
+  // Track which filter groups are expanded. Only "In Store Available" open by default.
+  // We'll rebuild this whenever the available filters change so every group has an explicit value.
+  const [expandedFilters, setExpandedFilters] = useState({});
 
   // Fetch products
   const fetchProducts = useCallback(
@@ -71,6 +77,15 @@ export default function CollectionPage() {
     fetchProducts(null);
   }, [activeSort, selectedFilters, handle]);
 
+  // whenever the available filter groups change, reset expansion state
+  useEffect(() => {
+    const init = {};
+    Object.keys(filters).forEach((groupKey) => {
+      init[groupKey] = groupKey === "In Store Available";
+    });
+    setExpandedFilters(init);
+  }, [filters]);
+
   const handleSort = (value) => {
     setActiveSort(value);
   };
@@ -92,6 +107,13 @@ export default function CollectionPage() {
 
   const clearAllFilters = () => {
     setSelectedFilters({});
+  };
+
+  const toggleFilterExpand = (groupKey) => {
+    setExpandedFilters((prev) => ({
+      ...prev,
+      [groupKey]: !prev[groupKey],
+    }));
   };
 
   const totalAppliedCount = Object.values(selectedFilters).flat().length;
@@ -117,27 +139,66 @@ export default function CollectionPage() {
               )}
             </div>
 
-            {Object.entries(filters).map(([groupKey, options]) => (
-              <div key={groupKey}>
-                <h4 className="font-medium text-sm mb-3 capitalize">{groupKey}</h4>
-                <div className="space-y-2">
-                  {Array.isArray(options) &&
-                    options.map((option) => {
-                      const isSelected = selectedFilters[groupKey]?.some((o) => o.label === option.label);
-
-                      return (
-                        <div key={option.label} className="flex items-center gap-2">
-                          <Checkbox id={`${groupKey}-${option.label}`} checked={isSelected} onCheckedChange={() => toggleFilter(groupKey, option)} />
-                          <label htmlFor={`${groupKey}-${option.label}`} className="text-sm cursor-pointer flex-1">
-                            {option.label}
-                          </label>
-                          <span className="text-xs text-gray-500">{option.count}</span>
-                        </div>
-                      );
-                    })}
-                </div>
+            {loading && Object.keys(filters).length === 0 ? (
+              <div className="space-y-4">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+                ))}
               </div>
-            ))}
+            ) : (
+              <>
+                {Object.entries(filters).map(([groupKey, options]) => {
+                  const isExpanded = expandedFilters[groupKey] ?? false;
+
+                  return (
+                    <div key={groupKey} className="border-b pb-4">
+                      {/* Filter Title with Chevron */}
+                      <button
+                        onClick={() => toggleFilterExpand(groupKey)}
+                        className="w-full flex items-center justify-between py-2 hover:opacity-70 transition-opacity hover:cursor-pointer"
+                      >
+                        <h4 className="font-medium text-sm capitalize">{groupKey}</h4>
+                        <ChevronDown
+                          size={18}
+                          className={`transition-transform duration-300 ${
+                            isExpanded ? "rotate-0" : "rotate-180"
+                          }`}
+                        />
+                      </button>
+
+                      {/* Filter Options - Collapsible */}
+                      {isExpanded && (
+                        <div className="space-y-2 mt-3">
+                          {Array.isArray(options) &&
+                            options.map((option) => {
+                              const isSelected = selectedFilters[groupKey]?.some(
+                                (o) => o.label === option.label
+                              );
+
+                              return (
+                                <div key={option.label} className="flex items-center gap-2">
+                                  <Checkbox
+                                    id={`${groupKey}-${option.label}`}
+                                    checked={isSelected}
+                                    onCheckedChange={() => toggleFilter(groupKey, option)}
+                                  />
+                                  <label
+                                    htmlFor={`${groupKey}-${option.label}`}
+                                    className="text-sm cursor-pointer flex-1"
+                                  >
+                                    {option.label}
+                                  </label>
+                                  <span className="text-xs text-gray-500">{option.count}</span>
+                                </div>
+                              );
+                            })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
         </div>
 
@@ -157,33 +218,70 @@ export default function CollectionPage() {
                   <SheetHeader>
                     <SheetTitle>Filters</SheetTitle>
                   </SheetHeader>
-                  <div className="space-y-6 mt-6">
+                  <div className="space-y-4 mt-6">
                     {totalAppliedCount > 0 && (
                       <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-xs w-full">
                         Clear All ({totalAppliedCount})
                       </Button>
                     )}
-                    {Object.entries(filters).map(([groupKey, options]) => (
-                      <div key={groupKey}>
-                        <h4 className="font-medium text-sm mb-3 capitalize">{groupKey}</h4>
-                        <div className="space-y-2">
-                          {Array.isArray(options) &&
-                            options.map((option) => {
-                              const isSelected = selectedFilters[groupKey]?.some((o) => o.label === option.label);
-
-                              return (
-                                <div key={option.label} className="flex items-center gap-2">
-                                  <Checkbox id={`m-${groupKey}-${option.label}`} checked={isSelected} onCheckedChange={() => toggleFilter(groupKey, option)} />
-                                  <label htmlFor={`m-${groupKey}-${option.label}`} className="text-sm cursor-pointer flex-1">
-                                    {option.label}
-                                  </label>
-                                  <span className="text-xs text-gray-500">{option.count}</span>
-                                </div>
-                              );
-                            })}
-                        </div>
+                    {loading && Object.keys(filters).length === 0 ? (
+                      <div className="space-y-4">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+                        ))}
                       </div>
-                    ))}
+                    ) : (
+                      Object.entries(filters).map(([groupKey, options]) => {
+                        const isExpanded = expandedFilters[groupKey] ?? false;
+
+                        return (
+                          <div key={groupKey} className="border-b pb-4">
+                            {/* Filter Title with Chevron */}
+                            <button
+                              onClick={() => toggleFilterExpand(groupKey)}
+                              className="w-full flex items-center justify-between py-2 hover:opacity-70 transition-opacity"
+                            >
+                              <h4 className="font-medium text-sm capitalize">{groupKey}</h4>
+                              <ChevronDown
+                                size={18}
+                                className={`transition-transform duration-300 ${
+                                  isExpanded ? "rotate-0" : "rotate-180"
+                                }`}
+                              />
+                            </button>
+
+                            {/* Filter Options - Collapsible */}
+                            {isExpanded && (
+                              <div className="space-y-2 mt-3">
+                                {Array.isArray(options) &&
+                                  options.map((option) => {
+                                    const isSelected = selectedFilters[groupKey]?.some(
+                                      (o) => o.label === option.label
+                                    );
+
+                                    return (
+                                      <div key={option.label} className="flex items-center gap-2">
+                                        <Checkbox
+                                          id={`m-${groupKey}-${option.label}`}
+                                          checked={isSelected}
+                                          onCheckedChange={() => toggleFilter(groupKey, option)}
+                                        />
+                                        <label
+                                          htmlFor={`m-${groupKey}-${option.label}`}
+                                          className="text-sm cursor-pointer flex-1"
+                                        >
+                                          {option.label}
+                                        </label>
+                                        <span className="text-xs text-gray-500">{option.count}</span>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
                 </SheetContent>
               </Sheet>
@@ -205,10 +303,34 @@ export default function CollectionPage() {
             <span className="text-sm text-gray-500">Showing {products.length} of {totalProducts}</span>
           </div>
 
+          {/* Applied Filters Badges */}
+          {totalAppliedCount > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mt-4">
+              {Object.entries(selectedFilters).map(([groupKey, options]) =>
+                options.map((opt) => (
+                  <Badge
+                    key={`${groupKey}-${opt.label}`}
+                    variant="secondary"
+                    className="cursor-pointer"
+                    onClick={() => toggleFilter(groupKey, opt)}
+                  >
+                    <span>{opt.label}</span>
+                    <XIcon className="size-3 ml-1" />
+                  </Badge>
+                ))
+              )}
+              <Button variant="link" size="sm" className="ml-4" onClick={clearAllFilters}>
+                Remove all
+              </Button>
+            </div>
+          )}
+
           {/* Products Grid */}
           {loading && products.length === 0 ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <ProductCardSkeleton key={i} />
+              ))}
             </div>
           ) : products.length > 0 ? (
             <>
@@ -217,6 +339,15 @@ export default function CollectionPage() {
                   <ProductCard key={product.id} product={product} showAddToCart={false} />
                 ))}
               </div>
+
+              {/* Pagination skeletons when loading next page */}
+              {loading && hasNextPage && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <ProductCardSkeleton key={`p-${i}`} />
+                  ))}
+                </div>
+              )}
 
               {/* Load More Button */}
               {hasNextPage && (
