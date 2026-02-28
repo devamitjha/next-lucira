@@ -67,7 +67,8 @@ Displays individual products with:
 - Discount badge (if applicable)
 - Stock status
 - Color swatches (interactive)
-- "Add to Cart" button
+- Reviews (star rating + count fetched from `/api/reviews`)
+- "Add to Cart" button (conditionally rendered via `showAddToCart` prop, which defaults to `true`)
 
 ### 5. **API Helpers** (`src/lib/api.js`)
 New export functions:

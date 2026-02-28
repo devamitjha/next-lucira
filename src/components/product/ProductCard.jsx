@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { fetchProductReviews } from "@/lib/api";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, showAddToCart = true }) {
   const [selectedColor, setSelectedColor] = useState(
     product.selectedColor || product.colors?.[0] || null
   );
@@ -53,6 +54,25 @@ export default function ProductCard({ product }) {
   ) || product.variants?.[0];
   const priceNumber = Number(variant?.price || 0);
   const comparePriceNumber = Number(variant?.compare_price || 0);
+
+  // reviews state
+  const [reviews, setReviews] = useState(null);
+
+  useEffect(() => {
+    let canceled = false;
+    async function load() {
+      try {
+        const data = await fetchProductReviews(product.id);
+        if (!canceled) setReviews(data);
+      } catch (e) {
+        console.error("Error fetching reviews:", e);
+      }
+    }
+    load();
+    return () => {
+      canceled = true;
+    };
+  }, [product.id]);
 
   const hasDiscount = comparePriceNumber > 0 && priceNumber < comparePriceNumber;
 
@@ -121,16 +141,25 @@ export default function ProductCard({ product }) {
             </div>
           )}
 
+          {/* Reviews */}
+          {reviews?.average >= 3 && (
+            <div className="text-sm text-gray-500 mt-1">
+              ⭐ {reviews.average} ({reviews.count})
+            </div>
+          )}
+
           {/* Add to Cart Button (always enabled for made-to-order) */}
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-            className="w-full mt-2"
-            size="sm"
-          >
-            Add to Cart
-          </Button>
+          {showAddToCart && (
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              className="w-full mt-2"
+              size="sm"
+            >
+              Add to Cart
+            </Button>
+          )}
         </div>
       </div>
     </Link>

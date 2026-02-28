@@ -106,3 +106,17 @@ export const fetchCollectionFilters = async (handle) => {
 
   return res.json();
 };
+
+/* ================= PRODUCT REVIEWS ================= */
+
+export const fetchProductReviews = async (productId) => {
+  if (!productId) {
+    throw new Error("Product ID required");
+  }
+
+  const res = await fetch(`/api/reviews?productId=${productId}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch reviews");
+  }
+  return res.json();
+};
