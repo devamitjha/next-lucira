@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import ProductCard from "@/components/product/ProductCard";
 import ProductCardSkeleton from "@/components/product/ProductCardSkeleton";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -31,6 +32,7 @@ export default function CollectionPage() {
   const [cursor, setCursor] = useState(null);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalProducts, setTotalProducts] = useState(0);
+  const [pagesLoaded, setPagesLoaded] = useState(0);
 
   const [activeSort, setActiveSort] = useState("best_selling");
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -46,7 +48,7 @@ export default function CollectionPage() {
         setLoading(true);
         const data = await fetchCollectionProducts({
           handle,
-          limit: 21,
+          limit: 19,
           cursor: newCursor,
           sort: activeSort,
           filters: JSON.stringify(selectedFilters),
@@ -54,8 +56,10 @@ export default function CollectionPage() {
 
         if (newCursor) {
           setProducts((prev) => [...prev, ...data.products]);
+          setPagesLoaded((prev) => (prev > 0 ? prev + 1 : 2));
         } else {
           setProducts(data.products);
+          setPagesLoaded(1);
         }
 
         setFilters(data.filters || {});
@@ -75,6 +79,7 @@ export default function CollectionPage() {
   useEffect(() => {
     setProducts([]);
     setCursor(null);
+    setPagesLoaded(0);
     fetchProducts(null);
   }, [activeSort, selectedFilters, handle]);
 
@@ -118,6 +123,62 @@ export default function CollectionPage() {
   };
 
   const totalAppliedCount = Object.values(selectedFilters).flat().length;
+
+  // Build grid items and inject promotional image at 3rd and 7th position of each page
+  const renderGridItems = () => {
+    const items = [];
+    const productsPerPage = 19; // as configured in fetchProducts limit
+
+    // base positions on the first page (1-based)
+    const basePositions = [3, 7];
+
+    // number of pages based on loaded pages or product count
+    const pages = pagesLoaded > 0 ? pagesLoaded : Math.max(1, Math.ceil(products.length / productsPerPage));
+
+    // build a set of global positions where images should appear
+    const imagePositions = new Set();
+    for (let p = 0; p < pages; p++) {
+      basePositions.forEach((bp) => {
+        imagePositions.add(bp + p * productsPerPage);
+      });
+    }
+
+    // iterate products with their global 1-based position and inject images at matching positions
+    for (let idx = 0; idx < products.length; idx++) {
+      const globalPos = idx + 1; // 1-based
+
+      if (imagePositions.has(globalPos)) {
+        items.push(
+          <div key={`inpage-${globalPos}`} className="overflow-hidden rounded-lg">
+            <Image src="/images/inpage.jpg" alt="Promo" width={800} height={400} className="w-full h-full object-cover rounded-lg" />
+          </div>
+        );
+      }
+
+      const prod = products[idx];
+      items.push(<ProductCard key={prod.id} product={prod} showAddToCart={false} />);
+    }
+
+    // If there are image positions beyond the current products (e.g., when page skeletons show), ensure images render for those positions too
+    // This handles the case where pagesLoaded > computed pages from products length (during pagination loading)
+    if (pagesLoaded > Math.ceil(products.length / productsPerPage)) {
+      // compute any image positions that fall after current products and render placeholders
+      for (let p = 0; p < pages; p++) {
+        basePositions.forEach((bp) => {
+          const pos = bp + p * productsPerPage;
+          if (pos > products.length && imagePositions.has(pos)) {
+            items.push(
+              <div key={`inpage-future-${pos}`} className="overflow-hidden rounded-lg">
+                <Image src="/images/inpage.jpg" alt="Promo" width={800} height={400} className="w-full h-full object-cover rounded-lg" />
+              </div>
+            );
+          }
+        });
+      }
+    }
+
+    return items;
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -341,9 +402,7 @@ export default function CollectionPage() {
           ) : products.length > 0 ? (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} showAddToCart={false} />
-                ))}
+                {renderGridItems()}
               </div>
 
               {/* Pagination skeletons when loading next page */}
