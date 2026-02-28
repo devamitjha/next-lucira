@@ -46,7 +46,7 @@ export default function CollectionPage() {
         setLoading(true);
         const data = await fetchCollectionProducts({
           handle,
-          limit: 20,
+          limit: 21,
           cursor: newCursor,
           sort: activeSort,
           filters: JSON.stringify(selectedFilters),
@@ -132,7 +132,7 @@ export default function CollectionPage() {
         <div className="hidden lg:block w-78 shrink-0">
           <div className="sticky top-5 self-start h-fit">
             <ScrollArea className="w-full h-[calc(100vh-5rem)]">
-              <div className="space-y-6 px-4">
+              <div className="space-y-3 px-4">
                 <div>
                   <h3 className="font-semibold mb-3">Filters</h3>
                   {totalAppliedCount > 0 && (
@@ -144,7 +144,7 @@ export default function CollectionPage() {
 
                 {loading && Object.keys(filters).length === 0 ? (
                   <div className="space-y-4">
-                    {Array.from({ length: 4 }).map((_, i) => (
+                    {Array.from({ length: 8 }).map((_, i) => (
                       <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
                     ))}
                   </div>
@@ -154,11 +154,11 @@ export default function CollectionPage() {
                       const isExpanded = expandedFilters[groupKey] ?? false;
 
                       return (
-                        <div key={groupKey} className="border-b pb-4">
+                        <div key={groupKey} className="border-b mb-0">
                           {/* Filter Title with Chevron */}
                           <button
                             onClick={() => toggleFilterExpand(groupKey)}
-                            className="w-full flex items-center justify-between py-2 hover:opacity-70 transition-opacity hover:cursor-pointer"
+                            className="w-full flex items-center justify-between py-5 hover:opacity-70 transition-opacity hover:cursor-pointer"
                           >
                             <h4 className="font-medium text-sm capitalize">{groupKey}</h4>
                             <ChevronDown
@@ -171,7 +171,7 @@ export default function CollectionPage() {
 
                           {/* Filter Options - Collapsible */}
                           {isExpanded && (
-                            <div className="space-y-2 mt-3">
+                            <div className="space-y-4 my-2 pb-5">
                               {Array.isArray(options) &&
                                 options.map((option) => {
                                   const isSelected = selectedFilters[groupKey]?.some(
@@ -179,7 +179,7 @@ export default function CollectionPage() {
                                   );
 
                                   return (
-                                    <div key={option.label} className="flex items-center gap-2">
+                                    <div key={option.label} className="flex items-center gap-3">
                                       <Checkbox
                                         id={`${groupKey}-${option.label}`}
                                         checked={isSelected}
@@ -187,11 +187,12 @@ export default function CollectionPage() {
                                       />
                                       <label
                                         htmlFor={`${groupKey}-${option.label}`}
-                                        className="text-sm cursor-pointer flex-1"
+                                        className="text-sm cursor-pointer flex items-center flex-1 gap-2"
                                       >
                                         {option.label}
+                                        <div className="text-xs text-gray-500">[{option.count}]</div>
                                       </label>
-                                      <span className="text-xs text-gray-500">{option.count}</span>
+                                      
                                     </div>
                                   );
                                 })}

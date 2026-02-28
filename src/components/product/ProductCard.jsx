@@ -84,7 +84,7 @@ export default function ProductCard({ product, showAddToCart = true }) {
     <Link href={`/products/${product.handle}`}>
       <div className="group xl:hover:shadow-lg transition-shadow duration-300 cursor-pointer rounded-md">
         {/* Product Image */}
-        <div className="relative w-full bg-[#fafafa] rounded-lg overflow-hidden mb-4">
+        <div className="relative w-full bg-[#fafafa] rounded-lg overflow-hidden">
           <Image
             src={variant?.image || product.image}
             alt={product.title}
