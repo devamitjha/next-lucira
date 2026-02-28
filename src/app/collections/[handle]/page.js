@@ -206,7 +206,7 @@ export default function CollectionPage() {
                 {loading && Object.keys(filters).length === 0 ? (
                   <div className="space-y-4">
                     {Array.from({ length: 8 }).map((_, i) => (
-                      <div key={i} className="h-4 bg-gray-200 rounded w-3/4 animate-pulse" />
+                      <div key={i} className="h-4 bg-gray-200 rounded w-full animate-pulse" />
                     ))}
                   </div>
                 ) : (

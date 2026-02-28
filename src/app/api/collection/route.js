@@ -114,6 +114,14 @@ export async function GET(req) {
                 title
                 handle
                 featuredImage { url }
+                images(first: 20) {
+                  edges {
+                    node {
+                      url
+                      altText
+                    }
+                  }
+                }
                 variants(first: 200) {
                   edges {
                     node {
@@ -175,11 +183,16 @@ export async function GET(req) {
         let selectedVariant =
           variants.find((v) => v.inStock) || variants[0];
 
+        const images = node.images?.edges?.map(({ node }) => ({
+          url: node.url,
+          altText: node.altText || "",
+        })) || [];
+
         return {
           id: node.id.split("/").pop(),
           title: node.title,
           handle: node.handle,
-          image: node.featuredImage?.url,
+          images,
           price: selectedVariant.price,
           compare_price: selectedVariant.compare_price,
           selectedColor: selectedVariant.color,

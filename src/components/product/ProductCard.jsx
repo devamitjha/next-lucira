@@ -6,13 +6,22 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { fetchProductReviews } from "@/lib/api";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination, Navigation } from 'swiper/modules';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+
 
 export default function ProductCard({ product, showAddToCart = true }) {
+
+  // ================= COLOR STATE =================
   const [selectedColor, setSelectedColor] = useState(
     product.selectedColor || product.colors?.[0] || null
   );
 
-  // helpers to convert raw color strings into a small palette
+  // ================= COLOR HELPERS =================
   const colorMap = {
     yellow: "#F2C94C",
     rose: "#F2A1A1",
@@ -30,68 +39,136 @@ export default function ProductCard({ product, showAddToCart = true }) {
   const getUniqueBaseColors = (colors = []) => {
     const seen = new Set();
     const result = [];
+
     for (const c of colors) {
       const base = getBaseColor(c);
       if (!base || seen.has(base)) continue;
       seen.add(base);
       result.push(base);
     }
+
     const order = ["yellow", "rose", "white"];
     return order.filter((c) => result.includes(c));
   };
 
   const baseColors = getUniqueBaseColors(product.colors);
 
+  // ================= SELECTED BASE COLOR =================
   const selectedBase = getBaseColor(selectedColor);
 
-  const handleColorSelect = (base) => {
-    const match = product.colors?.find((c) => getBaseColor(c) === base);
-    if (match) setSelectedColor(match);
+  // ================= SELECTED VARIANT =================
+  const variant =
+    product.variants?.find((v) => v.color === selectedColor) ||
+    product.variants?.[0];
+
+  // ================= IMAGE FILTERING =================
+  const getImagesByColor = (color) => {
+    if (!product.images || !color) return [];
+
+    return product.images.filter((img) =>
+      img.altText?.toLowerCase().includes(color.toLowerCase())
+    );
   };
 
-  const variant = product.variants?.find(
-    (v) => v.color === selectedColor
-  ) || product.variants?.[0];
+  const sliderImages = getImagesByColor(selectedBase);
+
+  const finalImages =
+    sliderImages.length > 0
+      ? sliderImages
+      : [
+          {
+            url: variant?.image || product.image,
+          },
+        ];
+
+  // ================= PRICE =================
   const priceNumber = Number(variant?.price || 0);
   const comparePriceNumber = Number(variant?.compare_price || 0);
 
-  // reviews state
-  const [reviews, setReviews] = useState(null);
-
-  useEffect(() => {
-    let canceled = false;
-    async function load() {
-      try {
-        const data = await fetchProductReviews(product.id);
-        if (!canceled) setReviews(data);
-      } catch (e) {
-        console.error("Error fetching reviews:", e);
-      }
-    }
-    load();
-    return () => {
-      canceled = true;
-    };
-  }, [product.id]);
-
-  const hasDiscount = comparePriceNumber > 0 && priceNumber < comparePriceNumber;
+  const hasDiscount =
+    comparePriceNumber > 0 && priceNumber < comparePriceNumber;
 
   const discountPercent = hasDiscount
-    ? Math.round(((comparePriceNumber - priceNumber) / comparePriceNumber) * 100)
+    ? Math.round(
+        ((comparePriceNumber - priceNumber) / comparePriceNumber) * 100
+      )
     : 0;
 
+  // ================= COLOR SELECT HANDLER =================
+  const handleColorSelect = (base) => {
+    const match = product.colors?.find(
+      (c) => getBaseColor(c) === base
+    );
+    if (match) setSelectedColor(match);
+  };
+
+  // ================= REVIEWS =================
+   // reviews state
+    const [reviews, setReviews] = useState(null);
+    useEffect(() => {
+      let canceled = false;
+      async function load() {
+        try {
+          const data = await fetchProductReviews(product.id);
+          if (!canceled) setReviews(data);
+        } catch (e) {
+          console.error("Error fetching reviews:", e);
+        }
+      }
+      load();
+      return () => {
+        canceled = true;
+      };
+    }, [product.id]);
+  const uniqueId = `swiper-${product.id}`;
   return (
-    <Link href={`/products/${product.handle}`}>
+    
       <div className="group xl:hover:shadow-lg transition-shadow duration-300 cursor-pointer rounded-md">
         {/* Product Image */}
         <div className="relative w-full bg-[#fafafa] rounded-lg overflow-hidden">
-          <Image
-            src={variant?.image || product.image}
-            alt={product.title}
-            width={300}
-            height={300}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 mix-blend-multiply"
-          />
+          <Link href={`/products/${product.handle}`} className="mix-blend-multiply">
+            <Swiper
+              spaceBetween={0}
+              loop={true}
+              slidesPerView={1}
+              modules={[Navigation]}
+              navigation={{
+                prevEl: `.custom-prev-${uniqueId}`,
+                nextEl: `.custom-next-${uniqueId}`,
+              }}
+            >
+              {finalImages.map((img, idx) => (
+                <SwiperSlide key={idx}>
+                  <Image
+                    src={img.url}
+                    alt={product.title}
+                    width={300}
+                    height={300}
+                    className="w-full h-full object-cover"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </Link>
+
+          {/* Custom Navigation */}
+          {finalImages.length > 1 && (
+            <div className="absolute bottom-4 right-4 flex gap-3 z-20">
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className={`custom-prev-${uniqueId} w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur shadow-md hover:bg-white transition cursor-pointer`}
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              <button
+                onClick={(e) => e.stopPropagation()}
+                className={`custom-next-${uniqueId} w-9 h-9 flex items-center justify-center rounded-full bg-white/80 backdrop-blur shadow-md hover:bg-white transition cursor-pointer`}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
 
           {/* Discount Badge */}
 
@@ -168,6 +245,6 @@ export default function ProductCard({ product, showAddToCart = true }) {
           )}
         </div>
       </div>
-    </Link>
+    
   );
 }
