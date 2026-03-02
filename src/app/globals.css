@@ -248,3 +248,44 @@
 .safe-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
+
+
+@keyframes moveGlow {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.animated-border {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 1px; /* border thickness */
+  background: #e5e5e5;
+}
+
+.animated-border .glow {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    #b67665 0%,
+    #8e5bc4 40%,
+    #ff8a00 70%,
+    transparent 80%
+  );
+  animation: moveGlow 5s linear infinite;
+  offset-path: rect(0% auto 100% auto);
+  pointer-events: none;
+}
+
+.animated-border > .inner {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  z-index: 10;
+}
