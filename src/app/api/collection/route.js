@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 import { shopifyStorefrontFetch, shopifyAdminFetch } from "@/lib/shopify";
 
@@ -216,12 +218,20 @@ export async function GET(req) {
 
     const totalProducts = await getCollectionTotalCount(handle);
 
-    return NextResponse.json({
-      products,
-      filters: processedFilters,
-      pageInfo: productsData.pageInfo,
-      totalProducts,
-    });
+    return NextResponse.json(
+      {
+        products,
+        filters: processedFilters,
+        pageInfo: productsData.pageInfo,
+        totalProducts,
+      },
+      {
+        headers: {
+          "Cache-Control":
+            "public, s-maxage=3600, stale-while-revalidate=3600",
+        },
+      }
+  );
   } catch (err) {
     console.error("❌ Collection API error:", err);
     return NextResponse.json(
