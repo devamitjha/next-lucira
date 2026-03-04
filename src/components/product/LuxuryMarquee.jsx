@@ -18,7 +18,7 @@ export default function LuxuryMarquee() {
       <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-linear-to-l from-primary to-transparent z-10"></div>
 
       <Marquee
-        speed={100}
+        speed={80}
         pauseOnHover={true}
         gradient={false}
       >
