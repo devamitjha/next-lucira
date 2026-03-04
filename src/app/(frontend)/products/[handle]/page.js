@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button"
 import PriceSection from "@/components/product/PriceSection";
 import AtcBar from "@/components/AtcBar";
+import LuxuryMarquee from "@/components/product/LuxuryMarquee";
 const imageList =
   [
     "/images/product/1.jpg",
@@ -307,7 +308,7 @@ export default function ProductPage() {
           </div>
           <PriceSection />
            {/* Certification */}
-          <div className="mt-6 space-y-8">            
+          <div className="mt-6 space-y-8 mb-6">            
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-medium text-gray-700">
                 Product is certified
@@ -330,6 +331,7 @@ export default function ProductPage() {
           <AtcBar/>
         </div>
       </div>
+      <LuxuryMarquee/>
     </div>
 
   );
