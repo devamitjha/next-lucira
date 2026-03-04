@@ -5,36 +5,29 @@ export default function PriceSection() {
   const [activeTab, setActiveTab] = useState("breakup");
 
   return (
-    <div className="block">
+    <div className="block space-y-4">
 
       {/* Animated Toggle */}
       <div className="relative bg-gray-100 rounded-full p-1 flex text-sm font-medium overflow-hidden">
-
-        {/* Sliding Background */}
         <div
-          className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-primary transition-all duration-300 ${
-            activeTab === "breakup" ? "left-1" : "left-1/2"
-          }`}
+          className={`absolute top-1 bottom-1 w-1/2 rounded-full bg-primary transition-all duration-300 ${activeTab === "breakup" ? "left-1" : "left-1/2"
+            }`}
         />
-
         <button
           onClick={() => setActiveTab("breakup")}
-          className={`relative z-10 flex-1 py-2 rounded-full transition-colors duration-300 ${
-            activeTab === "breakup"
+          className={`relative z-10 flex-1 py-3 rounded-full transition-colors duration-300 cursor-pointer ${activeTab === "breakup"
               ? "text-white"
               : "text-gray-600"
-          }`}
+            }`}
         >
           Price Breakup
         </button>
-
         <button
           onClick={() => setActiveTab("savings")}
-          className={`relative z-10 flex-1 py-2 rounded-full transition-colors duration-300 ${
-            activeTab === "savings"
+          className={`relative z-10 flex-1 py-3 rounded-full transition-colors duration-300 cursor-pointer ${activeTab === "savings"
               ? "text-white"
               : "text-gray-600"
-          }`}
+            }`}
         >
           Your Savings
         </button>
@@ -43,38 +36,36 @@ export default function PriceSection() {
 
       {/* Animated Content */}
       <div className="relative overflow-hidden">
-
         <div
-          className={`flex transition-transform duration-500 ${
-            activeTab === "breakup"
+          className={`flex transition-transform duration-500 ${activeTab === "breakup"
               ? "translate-x-0"
               : "-translate-x-1/2"
-          }`}
+            }`}
           style={{ width: "200%" }}
         >
 
           {/* ================= PRICE BREAKUP ================= */}
-          <div className="w-1/2 pr-4">
-            <div className="bg-gray-100 rounded-2xl p-6 space-y-5 text-sm">
+          <div className="w-1/2">
+            <div className="bg-gray-100 rounded-2xl p-6 space-y-3 text-[12px]">
 
               <div className="flex justify-between">
                 <span>14K Yellow Gold</span>
-                <span className="font-medium">₹26,762</span>
+                <span className="font-bold">₹26,762</span>
               </div>
 
               <div className="flex justify-between">
                 <span>Diamond</span>
-                <span className="font-medium">₹7,224</span>
+                <span className="font-bold">₹7,224</span>
               </div>
 
               <div className="flex justify-between">
                 <span>Making Charges</span>
-                <span className="font-medium">₹3,885</span>
+                <span className="font-bold">₹3,885</span>
               </div>
 
               <div className="flex justify-between">
                 <span>GST (3%)</span>
-                <span>₹1,136</span>
+                <span className="font-bold">₹1,136</span>
               </div>
 
               <hr />
@@ -86,11 +77,9 @@ export default function PriceSection() {
             </div>
           </div>
 
-
           {/* ================= YOUR SAVINGS ================= */}
-          <div className="w-1/2 pl-4">
-            <div className="bg-gray-100 rounded-2xl p-6 space-y-5 text-sm">
-
+          <div className="w-1/2">
+            <div className="bg-gray-100 rounded-2xl p-6 space-y-3 text-[12px]">
               <div className="grid grid-cols-3 font-medium text-gray-700">
                 <div>Diamond Comparison</div>
                 <div>Lucira Grown</div>

@@ -289,3 +289,87 @@
   border-radius: 12px;
   z-index: 10;
 }
+
+/* ---------------- GOLD SHIMMER ---------------- */
+
+.gold-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.gold-shimmer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 120%;
+  height: 100%;
+
+   background: linear-gradient(
+    110deg,
+    transparent 40%,
+    rgba(255,255,255,0.4) 50%,
+    transparent 60%
+  );
+
+
+
+  animation: goldSweep 4s linear infinite;
+}
+
+@keyframes goldSweep {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+
+/* ---------------- CART WIGGLE + SCALE ---------------- */
+
+@keyframes cartLuxuryWiggle {
+
+  0%,90%,100% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  92% {
+    transform: scale(1.5) rotate(-12deg);
+  }
+
+  94% {
+    transform: scale(1.5) rotate(12deg);
+  }
+
+  96% {
+    transform: scale(1.2) rotate(-8deg);
+  }
+
+  98% {
+    transform: scale(1.2) rotate(8deg);
+  }
+}
+
+.animate-cart-luxury {
+  animation: cartLuxuryWiggle 2s ease-in-out infinite;
+}
+
+
+/* ---------------- RIPPLE ---------------- */
+
+.ripple {
+  position: absolute;
+  border-radius: 9999px;
+  transform: scale(0);
+  animation: rippleAnim 600ms linear;
+  background: rgba(255,255,255,0.6);
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
