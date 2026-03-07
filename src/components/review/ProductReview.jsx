@@ -5,12 +5,12 @@ import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-mo
 import Image from 'next/image';
 
 const images = [
-  { id:1, src: "/images/product/1.jpg", title: "Curious Kitten", description: "Exploring the world one paw at a time" },
-  { id:2, src: "/images/product/2.jpg", title: "Sleepy Cat", description: "Dreaming of chasing mice in a field of catnip" },
-  { id:3, src: "/images/product/3.jpg", title: "Playful Friend", description: "Always ready for an adventure with you" },
-  { id:4, src: "/images/product/4.jpg", title: "Majestic Fluff", description: "Royalty doesn't need a crown when you have fur like this" },
-  { id:5, src: "/images/product/5.jpg", title: "Whiskers", description: "Specializing in judging human behavior" },
-  { id:6, src: "/images/product/6.jpg", title: "Whiskers", description: "Specializing in judging human behavior" },
+  { id:1, src: "/images/product/review/1.jpg", title: "Curious Kitten", description: "Exploring the world one paw at a time" },
+  { id:2, src: "/images/product/review/2.jpg", title: "Sleepy Cat", description: "Dreaming of chasing mice in a field of catnip" },
+  { id:3, src: "/images/product/review/3.jpg", title: "Playful Friend", description: "Always ready for an adventure with you" },
+  { id:4, src: "/images/product/review/4.jpg", title: "Majestic Fluff", description: "Royalty doesn't need a crown when you have fur like this" },
+  { id:5, src: "/images/product/review/5.jpg", title: "Whiskers", description: "Specializing in judging human behavior" },
+  { id:6, src: "/images/product/review/6.jpg", title: "Whiskers", description: "Specializing in judging human behavior" },
 ];
 
 function Card({ frontCard, index, setIndex, drag, image }) {
@@ -32,7 +32,7 @@ function Card({ frontCard, index, setIndex, drag, image }) {
 
   const variantsBackCard = {
     initial: { scale: 0.85, y: 20, opacity: 0.5 },
-    animate: { scale: 0.9, y: 40, opacity: 0.7 }
+    animate: { scale: 0.9, y: 30, opacity: 0.7 }
   };
 
   function handleDragEnd(_, info) {
@@ -66,20 +66,16 @@ function Card({ frontCard, index, setIndex, drag, image }) {
     >
       <motion.div
         style={{ scale }}
-        className="bg-white rounded-3xl shadow-2xl overflow-hidden w-75 h-100"
+        className="bg-white rounded-xl shadow-lg overflow-hidden w-60 h-50"
       >
         <Image
           src={image.src}
           alt={image.title}
-          width={400}
-          height={250}
-          className="object-cover w-full h-70"
+          width={250}
+          height={200}
+          className="object-cover object-center w-full h-60"
           draggable={false}
         />
-        <div className="p-4">
-          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{image.title}</h2>
-          <p className="text-sm sm:text-md text-gray-600 mt-2">{image.description}</p>
-        </div>
       </motion.div>
     </motion.div>
   );
@@ -90,7 +86,7 @@ export default function ProductReview() {
   const nextIndex = (index + 1) % images.length;
 
   return (
-      <motion.div className="relative w-full max-w-80 flex items-center justify-center mb-4 h-110">
+      <motion.div className="relative w-full max-w-60 flex items-center justify-center mb-5 h-50">
         <AnimatePresence initial={false}>
           <Card key={nextIndex} frontCard={false} image={images[nextIndex]} />
           <Card
