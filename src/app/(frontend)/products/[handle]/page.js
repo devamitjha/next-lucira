@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import PriceSection from "@/components/product/PriceSection";
 import AtcBar from "@/components/AtcBar";
 import LuxuryMarquee from "@/components/product/LuxuryMarquee";
+import ProductReviewCard from "@/components/review/ProductReviewCard";
 const imageList =
   [
     "/images/product/1.jpg",
@@ -332,6 +333,7 @@ export default function ProductPage() {
         </div>
       </div>
       <LuxuryMarquee/>
+      <ProductReviewCard/>
     </div>
 
   );
