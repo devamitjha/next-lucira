@@ -1,4 +1,4 @@
-import localFont from 'next/font/local'
+import { Figtree } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import ReduxProvider from "@/redux/provider";
@@ -6,26 +6,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import QueryProvider from "@/providers/QueryProvider";
 
-const futura = localFont({
-  src: [
-    {
-      path: '../assets/fonts/FuturaStd-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../assets/fonts/FuturaStd-Medium.woff2',
-      weight: '500',
-      style: 'semibold',
-    },
-    {
-      path: '../assets/fonts/FuturaStd-Bold.woff2',
-      weight: '700',
-      style: 'bold',
-    },
-  ],
-  display: 'swap',
-})
+const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["300","400","500","600","700","800","900"],
+  variable: "--font-figtree",
+  display: "swap",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -35,7 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${futura.className} antialiased`}>
+      <body className={`${figtree.className} antialiased`}>
         <ReduxProvider>
           <QueryProvider> 
             <Header />
