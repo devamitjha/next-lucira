@@ -115,12 +115,27 @@ export async function GET(req) {
                 id
                 title
                 handle
+                description
+                descriptionHtml
+                createdAt
+                tags
                 featuredImage { url }
-                images(first: 20) {
+                media(first: 20) {
                   edges {
                     node {
-                      url
-                      altText
+                      mediaContentType
+                      ... on MediaImage {
+                        image {
+                          url
+                          altText
+                        }
+                      }
+                      ... on Video {
+                        sources {
+                          url
+                          mimeType
+                        }
+                      }
                     }
                   }
                 }
@@ -185,15 +200,37 @@ export async function GET(req) {
         let selectedVariant =
           variants.find((v) => v.inStock) || variants[0];
 
-        const images = node.images?.edges?.map(({ node }) => ({
-          url: node.url,
-          altText: node.altText || "",
-        })) || [];
+        const images = [];
+        let hasVideo = false;
+
+        node.media?.edges?.forEach(({ node: m }) => {
+          if (m.mediaContentType === "IMAGE") {
+            images.push({
+              url: m.image.url,
+              altText: m.image.altText || "",
+            });
+          } else if (m.mediaContentType === "VIDEO") {
+            hasVideo = true;
+          }
+        });
+
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const isNew = new Date(node.createdAt) > thirtyDaysAgo;
+
+        const labelTag = node.tags?.find(tag => 
+          ["best seller", "hot", "trending", "limited"].includes(tag.toLowerCase())
+        );
 
         return {
           id: node.id.split("/").pop(),
           title: node.title,
           handle: node.handle,
+          description: node.description,
+          descriptionHtml: node.descriptionHtml,
+          video: hasVideo,
+          isNew: isNew,
+          label: labelTag || (isNew ? "New" : null),
           images,
           price: selectedVariant.price,
           compare_price: selectedVariant.compare_price,

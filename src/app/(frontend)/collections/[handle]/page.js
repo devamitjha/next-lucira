@@ -11,10 +11,11 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Checkbox } from "@/components/ui/checkbox";
 import Loader from "@/components/common/Loader";
 import { fetchCollectionProducts, fetchCollectionFilters } from "@/lib/api";
-import { ChevronDown, XIcon } from "lucide-react";
+import { ChevronDown, XIcon, ChevronsDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useInfiniteQuery } from "@tanstack/react-query";
+
 
 const SORT_OPTIONS = [
   { value: "best_selling", label: "Best Selling" },
@@ -186,13 +187,14 @@ export default function CollectionPage() {
           <div className="sticky top-5 self-start h-fit">
             <ScrollArea className="w-full h-[calc(100vh-5rem)]">
               <div className="space-y-3 px-4">
-                <div>
+                <div className="flex justify-between items-center border-b">
                   <h3 className="font-semibold mb-3">Filters</h3>
-                  {totalAppliedCount > 0 && (
+                  <span className="rotate-90"><ChevronsDown size={16}/></span>
+                  {/* {totalAppliedCount > 0 && (
                     <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-xs mb-4">
                       Clear All ({totalAppliedCount})
                     </Button>
-                  )}
+                  )} */}
                 </div>
 
                 {isLoading && Object.keys(filters).length === 0 ? (
@@ -232,20 +234,24 @@ export default function CollectionPage() {
                                   );
 
                                   return (
-                                    <div key={option.label} className="flex items-center gap-3">
+                                    <div key={option.label} className="flex items-center gap-3 text-sm">
                                       <Checkbox
                                         id={`${groupKey}-${option.label}`}
                                         checked={isSelected}
                                         onCheckedChange={() => toggleFilter(groupKey, option)}
                                       />
+
                                       <label
                                         htmlFor={`${groupKey}-${option.label}`}
-                                        className="text-sm cursor-pointer flex items-center flex-1 gap-2"
+                                        className="flex-1 cursor-pointer flex justify-between"
                                       >
-                                        {option.label}
-                                        <div className="text-xs text-gray-500">[{option.count}]</div>
+                                        <span>{option.label}</span>
+
+                                        <span className="text-gray-400 text-xs">
+                                          ({option.count})
+                                        </span>
                                       </label>
-                                      
+
                                     </div>
                                   );
                                 })}
@@ -262,9 +268,9 @@ export default function CollectionPage() {
         </div>
 
         {/* ================= PRODUCTS SECTION ================= */}
-        <div className="flex-1 space-y-6">
+        <div className="flex-1">
           {/* Toolbar */}
-          <div className="flex gap-4 items-center justify-between">
+          <div className="flex gap-4 items-center justify-between sticky top-0 bg-white z-99 py-4">
             <div className="flex gap-3">
               {/* Mobile Filter Sheet */}
               <Sheet>
@@ -344,8 +350,10 @@ export default function CollectionPage() {
                   </div>
                 </SheetContent>
               </Sheet>
-
-              {/* Sort Dropdown */}
+            {/* View Options - can extend later */}
+            <span className="text-sm text-gray-500">Showing {products.length} of {totalProducts}</span>
+            </div>
+             {/* Sort Dropdown */}
               <div className="flex items-center gap-2">
                 <span className="text-sm text-gray-600">Sort:</span>
                 <select value={activeSort} onChange={(e) => handleSort(e.target.value)} className="text-sm border rounded-md px-3 py-2">
@@ -355,16 +363,12 @@ export default function CollectionPage() {
                     </option>
                   ))}
                 </select>
-              </div>
-            </div>
-
-            {/* View Options - can extend later */}
-            <span className="text-sm text-gray-500">Showing {products.length} of {totalProducts}</span>
+              </div>            
           </div>
 
           {/* Applied Filters Badges */}
           {totalAppliedCount > 0 && (
-            <div className="flex flex-wrap items-center gap-2 mt-4">
+            <div className="flex flex-wrap items-center gap-2">
               {Object.entries(selectedFilters).map(([groupKey, options]) =>
                 options.map((opt) => (
                   <Badge
@@ -386,20 +390,20 @@ export default function CollectionPage() {
 
           {/* Products Grid */}
           {isLoading && products.length === 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 bg-white">
               {Array.from({ length: 6 }).map((_, i) => (
                 <ProductCardSkeleton key={i} />
               ))}
             </div>
           ) : products.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 bg-white">
                 {renderGridItems()}
               </div>
 
               {/* Pagination skeletons when loading next page */}
               {isLoading && hasNextPage && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 bg-white">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <ProductCardSkeleton key={`p-${i}`} />
                   ))}
