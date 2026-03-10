@@ -2,141 +2,86 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
-import { Receipt, Banknote } from "lucide-react";
+import Image from "next/image";
 
 export default function PriceSavingsDetails() {
   return (
-    <div className="mt-10">
+    <div className="mt-8">
+      <h2 className="text-[20px] font-bold tracking-tight mb-5">Price & Savings Details:</h2>
 
-      <h2 className="text-lg font-semibold mb-4">
-        Price & Savings Details:
-      </h2>
-
-      <div className="border rounded-lg p-4">
-
+      <div className="bg-[#FAFAFA] border border-gray-100 rounded-xl p-6">
         <Tabs defaultValue="price" className="w-full">
-
-          {/* Tabs */}
-
-          <TabsList className="grid grid-cols-2 bg-muted p-1 rounded-md mb-4">
-
-            <TabsTrigger value="price" className="relative flex items-center gap-2">
-              <Receipt size={16} />
+          <TabsList className="grid grid-cols-2 bg-[#EDEDED] p-1 rounded-lg h-[54px] mb-8 w-full">
+            <TabsTrigger 
+              value="price" 
+              className="flex items-center justify-center gap-3 font-bold text-[15px] data-[state=active]:bg-black data-[state=active]:text-white rounded-md transition-all h-full"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="8" x2="16" y1="10" y2="10"/><line x1="8" x2="12" y1="14" y2="14"/><line x1="8" x2="10" y1="18" y2="18"/></svg>
               Price Breakup
             </TabsTrigger>
-
-            <TabsTrigger value="savings" className="relative flex items-center gap-2">
-              <Banknote size={16} />
+            <TabsTrigger 
+              value="savings" 
+              className="flex items-center justify-center gap-3 font-bold text-[15px] data-[state=active]:bg-black data-[state=active]:text-white rounded-md transition-all h-full"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
               Your Savings
             </TabsTrigger>
-
           </TabsList>
 
-
-          {/* Price Breakup */}
-
-          <TabsContent value="price">
-
+          <TabsContent value="price" className="mt-0 outline-none">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-4 text-sm"
+              className="space-y-6"
             >
-
-              <Row
-                label="14K Yellow Gold (₹8,201/g)"
-                value="₹17,049"
+              <PriceRow label="14K Yellow Gold (₹8,201/g)" value="₹17,049" />
+              <PriceRow 
+                label="E-F, VVS/VS (9 Pcs.)" 
+                value="₹75,840" 
+                oldValue="₹101,120" 
               />
-
-              <Row
-                label="E-F, VVS/VS (9 Pcs.)"
-                value="₹75,840"
-                old="₹101,120"
-              />
-
-              <Row
-                label="Making Charges"
-                value="₹4,158"
-              />
-
-              <Row
-                label="GST (3%)"
-                value="₹2,911"
-              />
-
-              <div className="flex justify-between font-semibold text-base pt-3 border-t">
-                <span>Grand Total</span>
-                <span>₹99,959</span>
+              <PriceRow label="Making Charges" value="₹4,158" />
+              <PriceRow label="GST (3%)" value="₹2,911" />
+              
+              <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+                <span className="text-[18px] font-bold text-black">Grand Total</span>
+                <span className="text-[18px] font-bold text-black">₹99,959</span>
               </div>
-
             </motion.div>
-
           </TabsContent>
 
-
-          {/* Savings Tab */}
-
-          <TabsContent value="savings">
-
+          <TabsContent value="savings" className="mt-0 outline-none">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25 }}
-              className="space-y-4 text-sm"
+              className="space-y-6"
             >
-
-              <Row
-                label="Diamond Discount"
-                value="₹25,280"
-              />
-
-              <Row
-                label="Lucira Coins"
-                value="₹500"
-              />
-
-              <Row
-                label="Festival Offer"
-                value="₹3,200"
-              />
-
-              <div className="flex justify-between font-semibold text-base pt-3 border-t">
-                <span>Total Savings</span>
-                <span>₹28,980</span>
+              <PriceRow label="Diamond Discount" value="₹25,280" isSaving />
+              <PriceRow label="Lucira Coins" value="₹500" isSaving />
+              <PriceRow label="Festival Offer" value="₹3,200" isSaving />
+              
+              <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+                <span className="text-[18px] font-bold text-black">Total Savings</span>
+                <span className="text-[18px] font-bold text-[#1E7D4E]">₹28,980</span>
               </div>
-
             </motion.div>
-
           </TabsContent>
-
         </Tabs>
-
       </div>
-
     </div>
   );
 }
 
-
-function Row({ label, value, old }) {
+function PriceRow({ label, value, oldValue, isSaving }) {
   return (
-    <div className="flex justify-between items-center">
-
-      <span>{label}</span>
-
-      <div className="flex items-center gap-2">
-
-        {old && (
-          <span className="text-muted-foreground line-through">
-            {old}
-          </span>
+    <div className="flex justify-between items-center text-[15px] font-medium">
+      <span className="text-gray-900">{label}</span>
+      <div className="flex items-center gap-4">
+        {oldValue && (
+          <span className="text-gray-300 line-through font-bold">{oldValue}</span>
         )}
-
-        <span className="font-medium">{value}</span>
-
+        <span className={`font-bold ${isSaving ? 'text-[#1E7D4E]' : 'text-black'}`}>{value}</span>
       </div>
-
     </div>
   );
 }

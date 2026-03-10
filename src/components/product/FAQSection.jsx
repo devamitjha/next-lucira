@@ -41,9 +41,9 @@ export default function QuestionsAnswered() {
   ];
 
   return (
-    <section className="w-full px-17 py-16 bg-gray-50 mt-15"> 
+    <section className="w-full py-16 bg-gray-50 mt-15"> 
 
-      <div className="w0full mx-auto grid lg:grid-cols-[1fr_480px] gap-16">
+      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0 grid lg:grid-cols-[1fr_480px] gap-16">
 
         {/* LEFT FAQ */}
 

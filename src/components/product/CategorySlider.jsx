@@ -27,8 +27,8 @@ export default function CategorySlider() {
   const paginationElClass = `pagination-${id}`;
 
   return (
-    <section className="w-full py-16 px-4 md:px-16 bg-[#FAFAFA] overflow-hidden mt-15">
-      <div className="w-full">
+    <section className="w-full py-16 bg-[#FAFAFA] overflow-hidden mt-15">
+      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
         <h2 className="text-2xl md:text-3xl font-bold mb-10 text-black">Explore Our Categories</h2>
 
         <div className="relative">
