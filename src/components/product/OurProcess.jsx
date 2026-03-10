@@ -38,7 +38,7 @@ export default function OurProcess() {
 
   return (
     <section className="w-full mt-15 bg-white overflow-hidden">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         <h2 className="text-2xl md:text-3xl font-bold mb-12 text-black">
           Our Process
         </h2>

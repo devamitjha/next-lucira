@@ -7,7 +7,7 @@ import Image from "next/image";
 export function JoinLuciraCommunity() {
   return (
     <section className="w-full bg-[#F9F9F9] overflow-hidden mt-16">
-      <div className="max-w-360 mx-auto pe-17 min-[1440px]:px-0 grid md:grid-cols-2 gap-16 items-stretch">
+      <div className="max-w-480 mx-auto pe-17 min-[1440px]:pe-17 grid md:grid-cols-2 gap-16 items-stretch">
         {/* Left Side: Images */}
         <div className="flex h-80">
           <div className="w-1/2 relative bg-[#E5E5E5]">

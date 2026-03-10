@@ -90,7 +90,7 @@ export function ProductSlider({ title, subtitle, products = STATIC_PRODUCTS }) {
 
   return (
     <section className="w-full bg-white overflow-hidden mt-15">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         {(title || subtitle) && (
           <div className="mb-10">
             {title && <h2 className="text-3xl font-bold mb-2">{title}</h2>}

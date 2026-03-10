@@ -28,7 +28,7 @@ export default function CategorySlider() {
 
   return (
     <section className="w-full py-16 bg-[#FAFAFA] overflow-hidden mt-15">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         <h2 className="text-2xl md:text-3xl font-bold mb-10 text-black">Explore Our Categories</h2>
 
         <div className="relative">

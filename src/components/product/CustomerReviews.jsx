@@ -26,7 +26,7 @@ export default function CustomerReviews() {
 
   return (
     <section className="w-full py-20 bg-gray-50 mt-15">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         
         {/* Heading */}
         <h2 className="text-3xl font-bold text-center mb-12">

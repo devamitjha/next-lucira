@@ -37,7 +37,7 @@ export default function ProductPage() {
   const [activePromoSlide, setActivePromoSlide] = useState(1);
   return (
     <div className="w-full">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         {/* Breadcrumb */}
         <Breadcrumb className="py-6">
           <BreadcrumbList>

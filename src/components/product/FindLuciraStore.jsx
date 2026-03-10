@@ -8,7 +8,7 @@ import Image from "next/image";
 export function FindLuciraStore() {
   return (
     <section className="w-full py-16 bg-[#F9F9F9] mt-15">
-      <div className="max-w-360 mx-auto px-17 min-[1440px]:px-0">
+      <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         <div className="w-full text-center mb-12">
           <h2 className="text-3xl font-bold mb-8">
             Find in Lucira Store Near You
