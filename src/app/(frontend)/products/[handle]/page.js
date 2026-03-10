@@ -23,6 +23,7 @@ import FAQSection from "@/components/product/FAQSection";
 import DiamondComparison from "@/components/product/DiamondComparison";
 import { FindLuciraStore } from "@/components/product/FindLuciraStore";
 import { JoinLuciraCommunity } from "@/components/product/JoinLuciraCommunity";
+import { SameCollection } from "@/components/product/SameCollection";
 
 export default function ProductPage() {
   const [engraving, setEngraving] = useState("");
@@ -530,6 +531,7 @@ export default function ProductPage() {
       <CustomerReviews/>
       <FAQSection/>
       <DiamondComparison/>
+      <SameCollection/>
       <FindLuciraStore/>
       <JoinLuciraCommunity/>
 

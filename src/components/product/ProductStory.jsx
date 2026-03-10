@@ -4,9 +4,9 @@ import Image from "next/image";
 
 export default function ProductStory() {
   return (
-    <section className="w-full px-[68px] py-16 border-t">
+    <section className="w-full px-17 py-16">
 
-      <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
 
         {/* LEFT CONTENT */}
 
@@ -40,7 +40,7 @@ export default function ProductStory() {
         <div className="relative w-full h-[280px] lg:h-[320px] rounded-xl overflow-hidden bg-gray-100">
 
           <Image
-            src="/images/product/story-ring.jpg"
+            src="/images/story-ring.jpg"
             alt="Story Behind Product"
             fill
             className="object-cover"
