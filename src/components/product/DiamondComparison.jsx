@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-
-import { CheckCircle, XCircle, Sparkles, RefreshCcw } from "lucide-react";
+import { Check, X, RefreshCw, Sparkle } from "lucide-react";
 
 export default function DiamondComparison() {
   const rows = [
@@ -42,100 +41,83 @@ export default function DiamondComparison() {
     },
   ];
 
+  const CheckIcon = () => (
+    <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+      <Check size={14} className="text-white" strokeWidth={4} />
+    </div>
+  );
+
+  const XIcon = () => (
+    <div className="w-6 h-6 bg-[#D1D5DB] rounded-full flex items-center justify-center">
+      <X size={14} className="text-white" strokeWidth={4} />
+    </div>
+  );
+
   return (
-    <section className="w-full px-[68px] py-20 bg-gray-50 mt-15">
-
-      <div className="max-w-[1000px] mx-auto">
-
-        {/* Title */}
-
-        <h2 className="text-xl font-semibold text-center mb-12">
+    <section className="w-full py-8 bg-[#F9F9F9] mt-16">
+      <div className="w-full px-46">
+        <h2 className="text-[32px] font-bold text-center mb-20 text-black">
           Lab Grown Vs. Mined Diamonds
         </h2>
 
+        <div className="relative">
+          {/* Highlight Container for the middle column */}
+          <div className="absolute top-[-30px] bottom-[-30px] left-[35.5%] w-[33%] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] z-0"></div>
 
-        {/* Table */}
+          <div className="grid grid-cols-[1.5fr_1.3fr_1.3fr] relative z-10">
+            {/* Table Header */}
+            <div className="pb-10 px-4 text-lg font-bold text-black flex items-end">
+              Comparison Basis
+            </div>
+            <div className="pb-10 text-center text-lg font-bold text-black flex items-end justify-center">
+              Lab-Grown Diamond
+            </div>
+            <div className="pb-10 text-center text-lg font-bold text-black flex items-end justify-center">
+              Mined Diamond
+            </div>
 
-        <div className="grid grid-cols-[1.3fr_1fr_1fr] text-sm">
-
-          {/* Header */}
-
-          <div className="pb-6 font-medium text-muted-foreground">
-            Comparison Basis
-          </div>
-
-          <div className="pb-6 text-center font-medium bg-gray-50 rounded-t-lg border">
-            Lab-Grown Diamond
-          </div>
-
-          <div className="pb-6 text-center font-medium">
-            Mined Diamond
-          </div>
-
-
-         {rows.map((row, i) => (
-            <React.Fragment key={i}>
-
-                {/* Label */}
-                <div className="py-6 pr-6 border-t text-muted-foreground">
-                {row.label}
+            {/* Table Rows */}
+            {rows.map((row, i) => (
+              <React.Fragment key={i}>
+                <div className="py-7 px-4 border-t border-[#E5E5E5] text-[15px] font-medium text-black leading-snug flex items-center">
+                  {row.label}
                 </div>
-
-                {/* Lab */}
-                <div className="py-6 text-center border-t bg-gray-50 border-x">
-                {row.lab ? (
-                    <CheckCircle size={18} className="mx-auto text-black" />
-                ) : (
-                    <XCircle size={18} className="mx-auto text-gray-400" />
-                )}
+                <div className="py-7 border-t border-[#E5E5E5] flex items-center justify-center">
+                  {row.lab ? <CheckIcon /> : <XIcon />}
                 </div>
-
-                {/* Mined */}
-                <div className="py-6 text-center border-t">
-                {row.mined ? (
-                    <CheckCircle size={18} className="mx-auto text-black" />
-                ) : (
-                    <XCircle size={18} className="mx-auto text-gray-400" />
-                )}
+                <div className="py-7 border-t border-[#E5E5E5] flex items-center justify-center">
+                  {row.mined ? <CheckIcon /> : <XIcon />}
                 </div>
-
-            </React.Fragment>
+              </React.Fragment>
             ))}
+          </div>
         </div>
 
-
-        {/* Bottom Info */}
-
-        <div className="space-y-4 mt-10">
-
-          <div className="flex gap-3 items-start bg-gray-100 rounded-md p-4 text-sm">
-
-            <RefreshCcw size={18} />
-
-            <p>
+        {/* Bottom Info Section */}
+        <div className="mt-20 space-y-4">
+          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl p-6">
+            <div className="w-8 h-8 flex items-center justify-center">
+              <RefreshCw size={22} className="text-black" />
+            </div>
+            <p className="text-[16px] text-black font-medium">
               Every lab-grown diamond jewelry by Lucira comes with lifetime
               buyback assurance.
             </p>
-
           </div>
 
-          <div className="flex gap-3 items-start bg-gray-100 rounded-md p-4 text-sm">
-
-            <Sparkles size={18} />
-
-            <p>
-              The only real difference is how they’re formed; lab-grown and
+          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl p-6">
+            <div className="w-8 h-8 flex items-center justify-center">
+              <Sparkle size={22} className="text-black fill-black" />
+            </div>
+            <p className="text-[16px] text-black font-medium leading-relaxed">
+              The only real difference is how they&apos;re formed; lab-grown and
               natural diamonds are optically identical, with no visible
               difference to the naked eye, with distinctions detectable only
               by experts using advanced equipment.
             </p>
-
           </div>
-
         </div>
-
       </div>
-
     </section>
   );
 }

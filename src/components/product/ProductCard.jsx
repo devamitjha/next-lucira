@@ -179,12 +179,12 @@ export default function ProductCard({ product, showAddToCart = false }) {
 
         {/* Custom Navigation Arrows */}
         <button
-          className={`custom-prev-${uniqueId} absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer`}
+          className={`custom-prev-${uniqueId} absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer`}
         >
           <ChevronLeft size={20} />
         </button>
         <button
-          className={`custom-next-${uniqueId} absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer`}
+          className={`custom-next-${uniqueId} absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur shadow-md opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer`}
         >
           <ChevronRight size={20} />
         </button>

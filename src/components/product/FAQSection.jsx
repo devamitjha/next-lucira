@@ -11,41 +11,41 @@ export default function QuestionsAnswered() {
     {
       question: "What is a Lab Grown Diamond?",
       answer:
-        "Lab Grown Diamonds are Real Diamonds, identical to natural ones in chemical, physical, and optical properties, with only one key difference: their origin. While Natural Diamonds form deep within the Earth over billions of years, Lab Grown Diamonds are created in controlled environments using advanced technology. They offer the same brilliance and durability including the same hardness and resistance to scratches or damage at up to 85% less cost.",
+        "Lab grown diamonds are real diamonds created using advanced technology, offering the same brilliance and durability as natural diamonds.",
     },
     {
       question: "What if I order the wrong ring size?",
       answer:
-        "We offer complimentary resizing within 15 days of delivery.",
+        "If the ring size is incorrect, we offer complimentary resizing within fifteen days of delivery for your convenience.",
     },
     {
       question: "Do you offer a free ring sizer?",
       answer:
-        "Yes, we provide a free ring sizer so you can measure accurately at home.",
+        "Yes, we provide a complimentary ring sizer so you can accurately measure your finger size at home.",
     },
     {
       question: "Can I get my engagement ring engraved for free?",
       answer:
-        "Yes, engraving is complimentary on select products.",
+        "Yes, complimentary engraving is available on selected designs, allowing you to personalize your jewellery with a special message.",
     },
     {
       question: "What is your lifetime buyback policy?",
       answer:
-        "Lucira offers lifetime exchange and buyback options for eligible jewellery.",
+        "Lucira offers lifetime exchange and buyback options, ensuring long-term value and flexibility for your jewellery purchase.",
     },
     {
       question: "What is made-to-order and how long does it take to deliver?",
       answer:
-        "Made-to-order jewellery is crafted specifically for you and usually ships within 10–14 days.",
+        "Made-to-order jewellery is crafted specially for you and typically ships within ten to fourteen days after confirmation.",
     },
   ];
 
   return (
-    <section className="w-full px-[68px] py-20 bg-gray-50 mt-15">
+    <section className="w-full px-17 py-8 bg-gray-50 mt-16">
 
-      <div className="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-16 ">
+      <div className="w0full mx-auto grid lg:grid-cols-[1fr_480px] gap-16">
 
-        {/* LEFT SIDE FAQ */}
+        {/* LEFT FAQ */}
 
         <div>
 
@@ -59,12 +59,7 @@ export default function QuestionsAnswered() {
               const isOpen = openIndex === index;
 
               return (
-                <div
-                  key={index}
-                  className="border-b py-6"
-                >
-
-                  {/* Question */}
+                <div key={index} className="border-b py-6">
 
                   <button
                     onClick={() =>
@@ -81,24 +76,25 @@ export default function QuestionsAnswered() {
                     </span>
                   </button>
 
-
-                  {/* Answer */}
-
                   <AnimatePresence>
 
                     {isOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
+                        animate={{
+                          height: "auto",
+                          opacity: 1,
+                        }}
+                        exit={{
+                          height: 0,
+                          opacity: 0,
+                        }}
                         transition={{ duration: 0.25 }}
                         className="overflow-hidden"
                       >
-
-                        <p className="text-sm text-gray-600 leading-relaxed mt-4 max-w-[520px]">
+                        <p className="text-sm text-gray-600 leading-relaxed mt-4 max-w-130">
                           {faq.answer}
                         </p>
-
                       </motion.div>
                     )}
 
@@ -112,13 +108,12 @@ export default function QuestionsAnswered() {
 
         </div>
 
+        {/* RIGHT IMAGE */}
 
-        {/* RIGHT SIDE IMAGE */}
-
-        <div className="relative w-full h-[460px] rounded-lg overflow-hidden bg-gray-200">
+        <div className="relative w-full min-h-132 rounded-lg overflow-hidden bg-gray-200">
 
           <Image
-            src="/images/product/faq-image.jpg"
+            src="/images/faq.jpg"
             alt="FAQ"
             fill
             className="object-cover"
