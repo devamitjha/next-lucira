@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export function FindLuciraStore() {
   return (
-    <section className="w-full px-4 md:px-16 py-8 bg-[#F9F9F9] mt-16">
+    <section className="w-full px-4 md:px-16 py-16 bg-[#F9F9F9] mt-15">
       <div className="w-full">
         <div className="w-full text-center mb-12">
           <h2 className="text-3xl font-bold mb-8">

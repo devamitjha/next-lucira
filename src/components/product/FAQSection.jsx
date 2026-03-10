@@ -41,7 +41,7 @@ export default function QuestionsAnswered() {
   ];
 
   return (
-    <section className="w-full px-17 py-8 bg-gray-50 mt-16">
+    <section className="w-full px-17 py-16 bg-gray-50 mt-15"> 
 
       <div className="w0full mx-auto grid lg:grid-cols-[1fr_480px] gap-16">
 

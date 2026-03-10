@@ -37,68 +37,53 @@ export default function OurProcess() {
   ];
 
   return (
-    <section className="w-full px-[68px] py-16">
-
-      <div className="max-w-[1440px] mx-auto">
-
-        <h2 className="text-xl font-semibold mb-8">
+    <section className="w-full px-4 md:px-16 mt-15 bg-white overflow-hidden">
+      <div className="w-full">
+        <h2 className="text-2xl md:text-3xl font-bold mb-12 text-black">
           Our Process
         </h2>
 
         <Swiper
           modules={[FreeMode]}
           spaceBetween={24}
-          slidesPerView={4}
-          freeMode
+          slidesPerView={1.2}
+          freeMode={true}
           breakpoints={{
-            320: { slidesPerView: 1.2 },
             640: { slidesPerView: 2.2 },
-            1024: { slidesPerView: 3 },
-            1280: { slidesPerView: 4 },
+            1024: { slidesPerView: 3.2 },
+            1280: { slidesPerView: 4.2 },
           }}
+          className="w-full overflow-visible!"
         >
-
           {steps.map((step, i) => (
             <SwiperSlide key={i}>
-
-              <div className="space-y-4">
-
-                {/* Image */}
-
-                <div className="relative w-full h-[220px] rounded-lg overflow-hidden bg-gray-100">
-
+              <div className="flex flex-col gap-6 group">
+                {/* Image Container with Taller Aspect Ratio */}
+                <div className="relative aspect-[3/4] w-full bg-[#F5F5F5] overflow-hidden rounded-sm">
                   <Image
                     src={step.img}
                     alt={step.title}
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-
+                  {/* Placeholder overlay if image fails */}
+                  <div className="absolute inset-0 bg-[#F5F5F5] -z-10" />
                 </div>
 
-                {/* Text */}
-
-                <div className="space-y-2">
-
-                  <h3 className="font-semibold text-sm">
+                {/* Text Content */}
+                <div className="space-y-3 pr-4">
+                  <h3 className="text-xl font-bold text-black tracking-tight">
                     {step.title}
                   </h3>
-
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-[15px] text-gray-600 leading-relaxed font-medium">
                     {step.desc}
                   </p>
-
                 </div>
-
               </div>
-
             </SwiperSlide>
           ))}
-
         </Swiper>
-
       </div>
-
     </section>
   );
 }

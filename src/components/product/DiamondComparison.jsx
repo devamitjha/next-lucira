@@ -54,7 +54,7 @@ export default function DiamondComparison() {
   );
 
   return (
-    <section className="w-full py-8 bg-[#F9F9F9] mt-16">
+    <section className="w-full py-16 bg-[#F9F9F9] mt-15">
       <div className="w-full px-46">
         <h2 className="text-[32px] font-bold text-center mb-20 text-black">
           Lab Grown Vs. Mined Diamonds

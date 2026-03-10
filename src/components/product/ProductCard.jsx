@@ -143,7 +143,7 @@ export default function ProductCard({ product, showAddToCart = false }) {
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   priority={idx === 0}
-                  className="object-contain p-4"
+                  className="object-contain"
                 />
               </SwiperSlide>
             ))}

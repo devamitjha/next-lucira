@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
+import { useId } from "react";
 
 const STATIC_PRODUCTS = [
   {
@@ -80,41 +81,47 @@ const STATIC_PRODUCTS = [
   }
 ];
 
-export function SameCollection() {
+export function ProductSlider({ title, subtitle, products = STATIC_PRODUCTS }) {
+  const id = useId().replace(/:/g, "");
+  
+  const prevElClass = `prev-${id}`;
+  const nextElClass = `next-${id}`;
+  const paginationElClass = `pagination-${id}`;
+
   return (
-    <section className="w-full py-16 px-4 md:px-16 bg-white">
-      <div className="max-w-[1440px] mx-auto">
-        <div className="mb-10">
-          <h2 className="text-3xl font-bold mb-2">From the Same Collection</h2>
-          <p className="text-gray-600 text-lg">
-            Discover matching pieces that perfectly complement one another
-          </p>
-        </div>
+    <section className="w-full px-4 md:px-16 bg-white overflow-hidden mt-15">
+      <div className="w-full">
+        {(title || subtitle) && (
+          <div className="mb-10">
+            {title && <h2 className="text-3xl font-bold mb-2">{title}</h2>}
+            {subtitle && <p className="text-gray-600 text-lg">{subtitle}</p>}
+          </div>
+        )}
 
         <div className="relative group">
           <Swiper
             modules={[Navigation, Pagination]}
-            spaceBetween={30}
-            slidesPerView={1}
+            spaceBetween={20}
+            slidesPerView={1.2}
             navigation={{
-              nextEl: '.collection-next',
-              prevEl: '.collection-prev',
+              nextEl: `.${nextElClass}`,
+              prevEl: `.${prevElClass}`,
             }}
             pagination={{
-              el: '.collection-pagination',
+              el: `.${paginationElClass}`,
               clickable: true,
               renderBullet: (index, className) => {
-                return `<span class="${className} !w-8 !h-1.5 !rounded-full !bg-gray-300 transition-all duration-300 [&.swiper-pagination-bullet-active]:!bg-black"></span>`;
+                return `<span class="${className} !w-8 !h-1 !rounded-full !bg-gray-200 transition-all duration-300 [&.swiper-pagination-bullet-active]:!bg-black"></span>`;
               },
             }}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-              1280: { slidesPerView: 4 },
+              640: { slidesPerView: 2, spaceBetween: 24 },
+              1024: { slidesPerView: 3, spaceBetween: 30 },
+              1280: { slidesPerView: 4, spaceBetween: 30 },
             }}
-            className="w-full"
+            className="w-full overflow-visible!"
           >
-            {STATIC_PRODUCTS.map((product) => (
+            {products.map((product) => (
               <SwiperSlide key={product.id}>
                 <ProductCard product={product} />
               </SwiperSlide>
@@ -123,13 +130,13 @@ export function SameCollection() {
 
           {/* Navigation & Pagination Controls */}
           <div className="flex justify-between items-center mt-12 px-2">
-            <div className="collection-pagination flex items-center gap-2"></div>
+            <div className={`${paginationElClass} flex items-center gap-2`}></div>
             
             <div className="flex items-center gap-4">
-              <button className="collection-prev w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all">
+              <button className={`${prevElClass} w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all`}>
                 <ChevronLeft size={24} />
               </button>
-              <button className="collection-next w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all">
+              <button className={`${nextElClass} w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all`}>
                 <ChevronRight size={24} />
               </button>
             </div>
@@ -138,11 +145,11 @@ export function SameCollection() {
       </div>
 
       <style jsx global>{`
-        .collection-pagination {
+        .${paginationElClass} {
           position: static !important;
           width: auto !important;
         }
-        .collection-pagination .swiper-pagination-bullet {
+        .${paginationElClass} .swiper-pagination-bullet {
           margin: 0 !important;
         }
       `}</style>

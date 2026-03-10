@@ -18,24 +18,18 @@ export default function FeaturedIn() {
   ];
 
   return (
-    <section className="w-full px-[68px] py-16 bg-gray-50">
+    <section className="w-full py-16 bg-gray-50">
 
-      <div className="max-w-[1440px] mx-auto text-center space-y-8">
-
-        {/* Heading */}
-
-        <h2 className="text-xl font-semibold">
-          Featured In
-        </h2>
-
-
-        {/* Quote */}
-
-        <p className="text-muted-foreground max-w-3xl mx-auto">
-          “Lucira Jewelry focuses on modern fine jewellery, featuring
-          lab-grown diamonds and expert craftsmanship.”
-        </p>
-
+      <div className="w-full text-center space-y-8">
+        <div className="px-17">
+          <h2 className="text-xl font-semibold">
+            Featured In
+          </h2>
+          <p className="text-muted-foreground max-w-3xl mx-auto">
+            “Lucira Jewelry focuses on modern fine jewellery, featuring
+            lab-grown diamonds and expert craftsmanship.”
+          </p>
+      </div>
 
         {/* Marquee */}
 

@@ -18,12 +18,14 @@ import LuxuryMarquee from "@/components/product/LuxuryMarquee";
 import ProductStory from "@/components/product/ProductStory";
 import FeaturedIn from "@/components/product/FeaturedIn";
 import OurProcess from "@/components/product/OurProcess";
+import CategorySlider from "@/components/product/CategorySlider";
 import CustomerReviews from "@/components/product/CustomerReviews";
 import FAQSection from "@/components/product/FAQSection";
 import DiamondComparison from "@/components/product/DiamondComparison";
 import { FindLuciraStore } from "@/components/product/FindLuciraStore";
 import { JoinLuciraCommunity } from "@/components/product/JoinLuciraCommunity";
-import { SameCollection } from "@/components/product/SameCollection";
+import { ProductSlider } from "@/components/product/ProductSlider";
+import ExploreOtherRings from "@/components/product/ExploreOtherRings";
 
 export default function ProductPage() {
   const [engraving, setEngraving] = useState("");
@@ -531,7 +533,10 @@ export default function ProductPage() {
       <CustomerReviews/>
       <FAQSection/>
       <DiamondComparison/>
-      <SameCollection/>
+      <ProductSlider title="From the Same Collection" subtitle="Discover matching pieces that perfectly complement one another"/>
+      <ExploreOtherRings />
+      <CategorySlider/>
+      <ProductSlider title="Recently Viewed"/>
       <FindLuciraStore/>
       <JoinLuciraCommunity/>
 
