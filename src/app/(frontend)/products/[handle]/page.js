@@ -413,54 +413,51 @@ export default function ProductPage() {
                   action="BOOK HOME TRIAL"
                   img="/images/subscribe-2.jpg"
                 />
+                <Separator/>
               </div>
 
             {/* Product Details Section */}
-            <div className="pt-10 space-y-5">
+            <div className="space-y-4 mt-4">
               <h2 className="text-[20px] font-bold tracking-tight">Product Details:</h2>
-              <div className="bg-[#FAFAFA] border border-gray-100 rounded-xl p-8 space-y-10">
+              <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-4">
                 {/* Metal & Dimensions */}
-                <div className="flex gap-0 relative">
+                <div className="flex gap-3 relative justify-between">
                   {/* Metal */}
-                  <div className="flex-1 pr-8">
-                    <div className="flex items-center gap-2 font-bold text-[15px] mb-4 uppercase tracking-wide">
+                  <div className="w-[48%] border-r">
+                    <div className="flex items-center gap-2 font-semibold text-sm mb-2 uppercase tracking-wide">
                       <Image src="/images/icons/metal.svg" alt="" width={18} height={18} />
                       Metal
                     </div>
-                    <div className="flex items-center gap-6">
-                      <div className="w-[110px] h-[90px] bg-white rounded-lg border border-gray-100 flex items-center justify-center p-2 shadow-sm">
+                    <div className="flex items-center gap-4.5 pr-2">
+                      <div className="w-20 h-20 bg-white rounded-lg border border-gray-100 flex items-center justify-center p-2 shadow-sm">
                         <Image src="/images/product/try.jpg" alt="Metal" width={80} height={80} className="object-contain" />
                       </div>
-                      <div className="space-y-2">
-                        <p className="text-[15px] font-bold text-gray-900 leading-none">14KT Yellow Gold</p>
-                        <p className="text-[15px] font-bold text-gray-900 leading-none">Net Wt: 2.079 g</p>
+                      <div className="space-y-3">
+                        <p className="text-sm  leading-none">14KT Yellow Gold</p>
+                        <p className="text-sm leading-none">Net Wt: <span className="font-medium">2.079 g</span></p>
                       </div>
                     </div>
                   </div>
-
-                  {/* Divider */}
-                  <div className="w-[1px] bg-gray-200 self-stretch"></div>
-
                   {/* Dimensions */}
-                  <div className="flex-1 pl-12">
-                    <div className="flex items-center gap-2 font-bold text-[15px] mb-4 uppercase tracking-wide">
+                  <div className="w-[48%] pl-2">
+                    <div className="flex items-center gap-2 font-semibold text-sm mb-2 uppercase tracking-wide">
                       <Image src="/images/icons/dimension.svg" alt="" width={18} height={18} />
                       Dimensions
                     </div>
-                    <div className="flex items-center gap-6">
-                      <div className="w-[110px] h-[90px] bg-white rounded-lg border border-gray-100 flex items-center justify-center p-2 shadow-sm">
-                        <Image src="/images/product/6.jpg" alt="Dimensions" width={80} height={80} className="object-contain" />
+                    <div className="flex items-center gap-4.5">
+                      <div className="w-20 h-20 bg-white rounded-lg border border-gray-100 flex items-center justify-center p-2 shadow-sm">
+                        <Image src="/images/product/try.jpg" alt="Metal" width={80} height={80} className="object-contain" />
                       </div>
                       <div className="space-y-3">
-                        <p className="text-[15px] text-gray-900 font-bold leading-none">Height: <span className="font-medium ml-2">7.1 mm</span></p>
-                        <p className="text-[15px] text-gray-900 font-bold leading-none">Width: <span className="font-medium ml-2">8 mm</span></p>
-                        <p className="text-[15px] text-gray-900 font-bold leading-none">Gross Wt: <span className="font-medium ml-2">2.58 g</span></p>
+                        <p className="text-sm  leading-none">Height: <span className="font-medium ml-2">7.1 mm</span></p>
+                        <p className="text-sm  leading-none">Width: <span className="font-medium ml-2">8 mm</span></p>
+                        <p className="text-sm  leading-none">Gross Wt: <span className="font-medium ml-2">2.58 g</span></p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="h-[1px] bg-gray-200 w-full"></div>
+                <div className="h-px bg-gray-200 w-full"></div>
 
                 {/* Diamond Section */}
                 <div className="space-y-6">
