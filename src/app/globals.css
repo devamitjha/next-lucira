@@ -94,7 +94,7 @@
   --sidebar-ring: #b67665;
   /*custome font size*/
   --font-28px:1.75rem;
-  --font-12px:75rem;
+  --font-12px:.75rem;
 }
 
 .dark {

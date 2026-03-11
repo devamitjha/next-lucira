@@ -11,7 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Star, Play, Info, Heart, Truck, RotateCcw, BadgeCheck, PlayCircle, Video, Store, CheckCircle,  Diamond, Ruler, ShieldCheck, ChevronRight, Share2, MessageCircle  } from "lucide-react";
+import { Star, Play, Info, Heart, Truck, RotateCcw, BadgeCheck, PlayCircle, Video, Store, CheckCircle,  Diamond, Ruler, ShieldCheck, ChevronRight, Share2, MessageCircle, Ghost, Check  } from "lucide-react";
 import PriceSavingsDetails from "@/components/product/PriceSavingsDetails";
 import ProductAccordion from "@/components/product/ProductAccordion";
 import LuxuryMarquee from "@/components/product/LuxuryMarquee";
@@ -235,150 +235,172 @@ export default function ProductPage() {
 
 
             {/* Engraving */}
-            <div className="space-y-3 pt-4 border-t border-gray-100">
-              <h3 className="font-bold text-[15px]">Complimentary Engraving (optional)</h3>
-              <p className="text-[13px] text-gray-500 leading-relaxed font-medium">
-                Personalise your ring with a custom engraving. Your chosen message will
-                be carefully laser-engraved on the inner band.
-              </p>
-              <div className="flex gap-4 items-center">
+            <div className="mt-4 mb-6">
+              <div className="space-y-2">
+                <h3 className="font-semibold text-base">Complimentary Engraving (optional)</h3>
+                <p className="text-sm text-black leading-relaxed font-medium">
+                  Personalise your ring with a custom engraving. Your chosen message will
+                  be carefully laser-engraved on the inner band.
+                </p>
+              </div>
+              <div className="flex gap-4 items-center mt-4">
                 <div className="relative flex-1">
                   <Input
                     value={engraving}
                     maxLength={20}
                     onChange={(e)=>setEngraving(e.target.value)}
                     placeholder="Enter name, date, initials"
-                    className="h-12 bg-white border-gray-200 pr-16 text-sm font-medium"
+                    className="h-12 bg-white border-gray-300 pr-16 text-sm"
                   />
-                  <button className="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] font-bold text-gray-400 hover:text-black transition-colors">
+                  <Button variant="ghost" className="absolute right-2 top-1/2 -translate-y-1/2 text-sm font-bold text-gray-400 hover:cursor-pointer">
                     DONE
-                  </button>
+                  </Button>
                 </div>                
               </div>
-              <div className="text-right text-[11px] font-bold text-gray-400">
+              <div className="text-right text-base text-black mt-1 leading-6">
                 {engraving.length}/20
               </div>
             </div>
-
+            
             {/* Action Buttons */}
-            <div className="flex gap-4 pt-2">
-              <Button className="flex-1 h-14 text-[16px] font-bold  rounded-md hover:cursor-pointer">
-                ADD TO CART
-              </Button>
-              <Button variant="outline" size="icon" className="h-14 w-14 rounded-md border-gray-200 hover:bg-gray-50 hover:cursor-pointer">
-                <Heart size={24} className="text-black" />
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" className="h-12 font-bold text-sm border-gray-200 rounded-md hover:bg-gray-50 flex items-center justify-center gap-2">
-                 <Image src="/images/icons/engrave.svg" alt="whatsapp" width={18} height={18} />
-                 Whatsapp Us
-              </Button>
-              <Button variant="outline" className="h-12 font-bold text-sm border-gray-200 rounded-md hover:bg-gray-50 flex items-center justify-center gap-2">
-                <Video size={18} className="text-black" />
-                Shop Live
-              </Button>
-            </div>
-
-            {/* Features */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-3 pt-1 text-[13px] font-bold text-black">
-              <Feature icon={<Image src="/images/product/shipping.svg" alt="" width={20} height={20} />} text="Free and secure shipping" />
-              <Feature icon={<Image src="/images/product/return.svg" alt="" width={20} height={20} />} text="15-day free returns" />
-              <Feature icon={<Image src="/images/product/exchange.svg" alt="" width={20} height={20} />} text="Lifetime exchange and 100% value guarantee" />
-              <Feature icon={<BadgeCheck size={20} className="text-gray-400" />} text="IGI and Hallmark certified" />
-            </div>
-
-            {/* Lucira Coins */}
-            <div className="flex gap-4 items-center bg-[#FDF8EE] border border-[#FBEAC8] rounded-xl p-4">
-              <div className="bg-[#FEF1D4] w-12 h-12 rounded-lg flex items-center justify-center">
-                 <Star size={24} className="text-[#D4A017] fill-[#D4A017]" />
-              </div>
-              <div className="space-y-0.5">
-                <p className="text-[13px] font-bold leading-tight">
-                  Earn 5138 Lucira Coins worth ₹500 with this order
-                </p>
-                <p className="text-[11px] font-bold text-gray-500">
-                  10 Lucira Coins = ₹1
-                </p>
-              </div>
-            </div>
-
-            {/* Pincode & Delivery */}
-            <div className="space-y-5 pt-2">
-              <div className="flex gap-3">
-                <Input
-                  placeholder="Enter Pincode"
-                  defaultValue="411005"
-                  className="h-12 bg-white border-gray-200 rounded-md text-sm font-medium"
-                />
-                <Button className="h-12 px-10 font-bold rounded-md">
-                  CHECK
+            <div className="space-y-2 mb-4">
+              <div className="flex gap-2">
+                <Button className="flex-1 h-12 text-lg font-bold  rounded-md hover:cursor-pointer">
+                  ADD TO CART
+                </Button>
+                <Button variant="outline" size="icon" className="h-12 w-12 rounded-md bg-gray-50 hover:cursor-pointer">
+                  <Heart size={24} className="text-black" />
                 </Button>
               </div>
-              <div className="text-[13px] text-gray-500 flex items-center gap-2 font-medium">
-                <Info size={16} className="text-gray-300" />
-                Estimated free dispatch by <span className="font-bold text-black">January 21, 2026</span>
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="outline" className="h-12 font-medium text-lg flex items-center justify-center gap-2 bg-gray-50 hover:cursor-pointer">
+                  <Image src="/images/icons/engrave.svg" alt="whatsapp" width={18} height={18} />
+                  Whatsapp Us
+                </Button>
+                <Button variant="outline" className="h-12 font-medium text-lg flex items-center justify-center gap-2 bg-gray-50 hover:cursor-pointer">
+                  <Video size={18} className="text-black" />
+                  Shop Live
+                </Button>
               </div>
             </div>
 
-            {/* Nearest Store */}
-            <div className="border border-gray-200 rounded-xl p-6 space-y-4 bg-white">
-              <div className="flex items-center gap-3">
-                <Store size={20} className="text-gray-400" />
-                <span className="text-sm font-bold">Nearest Store - <span className="italic font-normal text-gray-600">Pune Lucira Store (3Km)</span></span>
+           
+            <div className="space-y-4">
+            {/* Features */}
+              <div className="flex justify-between items-center gap-x-4 text-sm font-medium text-black">
+                <div className="flex flex-col space-y-4.5 flex-1">
+                    <Feature icon={<Image src="/images/product/shipping.svg" alt="" width={20} height={20} />} text="Free and secure shipping" />
+                    <Feature icon={<Image src="/images/product/exchange.svg" alt="" width={20} height={20} />} text="Lifetime exchange and 100% value guarantee" />                  
+                </div>
+                <div className="flex flex-col space-y-4.5">
+                  <Feature icon={<Image src="/images/product/return.svg" alt="" width={20} height={20} />} text="15-day free returns" />
+                  <Feature icon={<BadgeCheck size={20} className="text-black" />} text="IGI and Hallmark certified" />
+                </div>
               </div>
-              <div className="flex items-center gap-2 bg-[#E6F5EF] text-[#1E7D4E] px-3 py-1 rounded-full w-fit">
-                <CheckCircle size={14} fill="currentColor" className="text-[#2DB36F]" />
-                <span className="text-[11px] font-bold uppercase tracking-tight">Design Available</span>
+
+              <Separator/>
+
+              {/* Lucira Coins */}
+              <div className="flex gap-4 items-center bg-gray-50 border border-gray-100 rounded-xl p-4">
+                <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center">
+                  <Star size={24} className="text-primary fill-primary" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold leading-tight">
+                    Earn 5138 Lucira Coins worth ₹500 with this order
+                  </p>
+                  <p className="text-sm font-medium text-black">
+                    10 Lucira Coins = ₹1
+                  </p>
+                </div>
               </div>
-              <p className="text-[13px] text-gray-500 font-bold">
-                Also available in <button className="text-black underline underline-offset-2 decoration-gray-300">2 other stores</button>
-              </p>
-              <Button className="w-full h-12 font-bold rounded-md">
-                FIND IN STORE
-              </Button>
+
+              <Separator/>
+            </div>
+
+            <div className="space-y-4 mt-4">
+              {/* Pincode & Delivery */}
+              <div className="space-y-3 pt-2">
+                <div className="relative">
+                  <Input
+                    placeholder="Enter Pincode"
+                    defaultValue="411005"
+                    className="h-14 bg-white border-gray-200 rounded-md text-sm font-medium pr-40"
+                  />
+                  <Button className="h-12 px-10 font-bold rounded-md absolute right-1 top-1/2 transform -translate-y-1/2 hover:cursor-pointer">
+                    CHECK
+                  </Button>
+                </div>
+                <div className="text-sm text-black flex items-center gap-2">
+                  <Info size={16} className="text-black" />
+                  Estimated free dispatch by <span className="font-semibold text-black">January 21, 2026</span>
+                </div>
+              </div>
+
+              {/* Nearest Store */}
+              <div className="border border-gray-200 rounded-md p-4 space-y-2.5 bg-gray-50">
+                <div className="flex items-center gap-2">
+                  <Store size={20} className="text-black" strokeWidth={1.2} />
+                  <span className="text-base font-bold">Nearest Store - <span className="italic font-semibold text-black">Pune Lucira Store (3Km)</span></span>
+                </div>
+                <div className="flex items-center gap-2 bg-[#E3F5E0] text-black px-3 py-1.5 rounded-full w-fit">
+                      <div className="w-3.5 h-3.5 bg-[#76D168] rounded-full flex items-center justify-center">
+                        <Check size={9} className="text-white" strokeWidth={4} />
+                      </div>
+                      <span className="text-12px font-semibold tracking-tight">Design Available</span>
+                </div>
+                <p className="text-sm text-black">
+                  Also available in <button className="underline underline-offset-2 font-bold">2 other stores</button>
+                </p>
+                <Button className="w-full h-12 font-bold rounded-md mt-1 text-sm">
+                  FIND IN STORE
+                </Button>
+              </div>
+              <Separator/>
             </div>
 
             {/* Promo Cards Slider */}
-            <div className="space-y-6 pt-4 overflow-hidden">
-              <Swiper
-                spaceBetween={12}
-                slidesPerView={1.2}
-                onSlideChange={(swiper) => setActivePromoSlide(swiper.activeIndex + 1)}
-                className="w-full overflow-visible!"
-              >
-                {[1, 2, 3].map((i) => (
-                  <SwiperSlide key={i}>
-                    <div className="bg-[#F9F9F9] border border-gray-100 rounded-xl p-5 flex items-center gap-5 h-full">
-                      <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-sm shrink-0">
-                        <Image src="/images/story-ring.jpg" alt="gold coin" fill className="object-cover" />
+            <div className="space-y-4 mt-4">
+              <div className="overflow-hidden">
+                <Swiper
+                  spaceBetween={12}
+                  slidesPerView={1.2}
+                  onSlideChange={(swiper) => setActivePromoSlide(swiper.activeIndex + 1)}
+                  className="w-full overflow-visible!"
+                >
+                  {[1, 2, 3].map((i) => (
+                    <SwiperSlide key={i}>
+                      <div className="bg-[#F9F9F9] border border-gray-100 rounded-xl p-5 flex items-center gap-5 h-full">
+                        <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-sm shrink-0">
+                          <Image src="/images/story-ring.jpg" alt="gold coin" fill className="object-cover" />
+                        </div>
+                        <div className="space-y-2">
+                          <p className="text-lg font-semibold italic leading-tight">Complimentary Gold Coin</p>
+                          <p className="text-sm leading-relaxed">
+                            Receive a free gold coin with this ring, making your order even more special.
+                          </p>
+                        </div>
                       </div>
-                      <div className="space-y-1">
-                        <p className="text-[15px] font-bold italic leading-tight">Complimentary Gold Coin</p>
-                        <p className="text-[12px] text-gray-500 leading-relaxed font-bold">
-                          Receive a free gold coin with this ring, making your order even more special.
-                        </p>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-
-              {/* Slider Indicator */}
-              <div className="flex items-center gap-5">
-                <div className="flex-1 h-[3px] bg-gray-100 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-black rounded-full transition-all duration-300"
-                    style={{ width: `${(activePromoSlide / 3) * 100}%` }}
-                  ></div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                {/* Slider Indicator */}
+                <div className="flex items-center gap-5 mt-4">
+                  <div className="flex-1 h-0.75 bg-gray-100 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-black rounded-full transition-all duration-300"
+                      style={{ width: `${(activePromoSlide / 3) * 100}%` }}
+                    ></div>
+                  </div>
+                  <span className="text-[12px] font-bold tracking-tight text-black">{activePromoSlide}/3</span>
                 </div>
-                <span className="text-[12px] font-bold tracking-tight text-black">{activePromoSlide}/3</span>
               </div>
-
-              {/* Explore Section */}
-              <div className="space-y-4 pt-4">
-                <h3 className="text-[15px] font-bold">More Ways To Explore:</h3>
+              <Separator/>
+            
+            </div>
+             {/* Explore Section */}
+              <div className="space-y-4 mt-4">
+                <h3 className="text-base font-semibold">More Ways To Explore:</h3>
                 <ExploreCard
                   title="Visit Our Store"
                   description="Explore and try your favorite designs in person, with expert guidance from our in-store team."
@@ -392,7 +414,6 @@ export default function ProductPage() {
                   img="/images/subscribe-2.jpg"
                 />
               </div>
-            </div>
 
             {/* Product Details Section */}
             <div className="pt-10 space-y-5">
@@ -581,21 +602,21 @@ function DiamondInfo({ img, shape, pcs, carat }) {
 
 function ExploreCard({ title, description, action, img }) {
   return (
-    <div className="bg-[#F9F9F9] border border-gray-100 rounded-lg p-4 flex items-center gap-5">
+    <div className="bg-[#F9F9F9] border border-gray-100 rounded-lg p-3 flex items-center justify-between gap-3">
       <div className="w-24 h-16 rounded-md bg-gray-200 shrink-0 relative overflow-hidden shadow-sm">
         {img && <Image src={img} alt={title} fill className="object-cover" />}
       </div>
       <div className="flex-1 space-y-1">
-        <p className="text-sm font-bold leading-tight">
+        <p className="text-sm font-semibold leading-tight">
           {title}
         </p>
-        <p className="text-[12px] text-gray-500 font-bold leading-[1.3]">
+        <p className="text-12px font-medium leading-[1.3]">
           {description}
         </p>
       </div>
-      <button className="text-[12px] font-bold underline underline-offset-4 decoration-gray-300 hover:text-black whitespace-nowrap">
+      <Button variant="link" className="text-sm p-0 m-0 font-bold underline underline-offset-4 whitespace-nowrap">
         {action}
-      </button>
+      </Button>
     </div>
   );
 }
