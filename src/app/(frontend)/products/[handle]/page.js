@@ -27,6 +27,7 @@ import { JoinLuciraCommunity } from "@/components/product/JoinLuciraCommunity";
 import { ProductSlider } from "@/components/product/ProductSlider";
 import ExploreOtherRings from "@/components/product/ExploreOtherRings";
 import WearThisWith from "@/components/product/WearThisWith";
+import { Separator } from "@/components/ui/separator"
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
@@ -39,17 +40,17 @@ export default function ProductPage() {
     <div className="w-full">
       <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         {/* Breadcrumb */}
-        <Breadcrumb className="py-6">
+        <Breadcrumb className="py-5">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#" className="text-[13px] font-medium text-black">Engagement Rings</BreadcrumbLink>
+              <BreadcrumbLink href="#" className="text-sm font-medium text-black">Engagement Rings</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator><ChevronRight size={14}/></BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink href="#" className="text-[13px] font-medium text-black">Round</BreadcrumbLink>
+              <BreadcrumbLink href="#" className="text-sm font-medium text-black">Round</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator><ChevronRight size={14}/></BreadcrumbSeparator>
-            <BreadcrumbItem className="text-[13px] font-medium text-gray-400">
+            <BreadcrumbItem className="text-sm font-medium text-gray-400">
               Round Cut with Side Diamonds Accent Engagement Ring
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -92,129 +93,146 @@ export default function ProductPage() {
           </div>
 
           {/* Right: Product Info */}
-          <div className="space-y-6">
-            <div className="space-y-3">
-              <h1 className="text-[28px] font-bold leading-[1.2] tracking-tight">
-                2 CT Round Cut with Side Diamonds Accent Engagement Ring
-              </h1>
-              <div className="flex items-center gap-1.5 leading-none overflow-hidden justify-start">
-                <span className="text-[14px] text-gray-500">VVS-VS Clarity · EF Color · 14K yellow gold · 2.6g · 4 round + 4 marquise accents · Lab-Grown diamond 
-                  <button className="inline-flex items-center">
-                    <Info size={14} className="text-gray-400 ml-0.5" />
+          <div className="w-full">
+
+            <div className="space-y-4">
+              {/* Title */}
+              <div className="w-full">
+                <div className="space-y-3">
+                  <h1 className="text-28px font-bold leading-[1.2] tracking-tight">
+                    2 CT Round Cut with Side Diamonds Accent Engagement Ring
+                  </h1>
+                  <div className="flex items-center gap-1.5 leading-none overflow-hidden justify-start">
+                    <span className="text-base text-gray-800">VVS-VS Clarity · EF Color · 14K yellow gold · 2.6g · 4 round + 4 marquise accents · Lab-Grown diamond 
+                      <button className="inline-flex items-center">
+                        <Info size={14} className="text-gray-800 ml-2 top-0.75 relative hover:cursor-pointer" />
+                      </button>
+                    </span>
+                  </div>
+                </div>
+                {/* Rating */}
+                <div className="flex items-center gap-2 mt-3">
+                  <div className="flex items-center gap-0.5">
+                    {[1,2,3,4,5].map(i => (
+                      <Star key={i} size={16} fill="black" className="text-black" />
+                    ))}
+                  </div>
+                  <span className="text-sm font-semibold">4.9</span>
+                </div>
+              </div>
+
+              {/* Price */}
+              <div className="w-full">
+                <div className="flex items-center gap-3 pt-1">
+                  <span className="text-xl font-bold">₹99,970</span>
+                  <span className="text-lg text-gray-500 line-through font-medium">₹126,008</span>
+                  <span className="bg-gray-100 text-black text-base font-semibold px-3 py-1 rounded-full">
+                    21% OFF
+                  </span>
+                  <button className="text-sm font-semibold underline underline-offset-4 ml-auto decoration-gray-300">
+                    See Savings Breakup
                   </button>
-                </span>
+                </div>
+                <p className="text-sm text-gray-400 font-medium tracking-tight mt-2">Inclusive of all taxes.</p>
               </div>
               
-              <div className="flex items-center gap-2">
-                <div className="flex items-center gap-0.5">
-                  {[1,2,3,4,5].map(i => (
-                    <Star key={i} size={16} fill="black" className="text-black" />
+              
+              {/* Savings Banners Slider */}
+              <div className="w-full">
+                <Swiper
+                  modules={[Autoplay]}
+                  spaceBetween={8}
+                  slidesPerView={1.5}
+                  autoplay={false}
+                  loop={true}
+                  className="w-full"
+                >
+                  <SwiperSlide>
+                    <div className="border border-dashed border-gray-400 rounded-lg px-3 py-3 flex items-center gap-2 bg-gray-50 h-full">
+                      <span className="text-base shrink-0">💎</span>
+                      <p className="text-sm font-semibold text-black whitespace-nowrap">
+                        You're saving flat <span className="font-extrabold text-black">25% OFF</span> on diamond prices.
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="border border-dashed border-gray-400 rounded-lg px-3 py-3 flex items-center gap-2 bg-gray-50 h-full">
+                      <span className="text-base shrink-0">🪙</span>
+                      <p className="text-sm font-semibold text-black whitespace-nowrap">
+                        Save more with <span className="font-extrabold text-black">Lucira coins</span>
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="border border-dashed border-gray-400 rounded-lg px-3 py-3 flex items-center gap-2 bg-gray-50 h-full">
+                      <span className="text-base shrink-0">✨</span>
+                      <p className="text-sm font-semibold text-black whitespace-nowrap">
+                        Free <span className="font-extrabold text-black">Gift</span> included
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
+              <Separator />
+            </div>
+            
+            
+            
+            <div className="space-y-6 mt-4">
+              {/* Gold Selection */}
+              <div className="space-y-3">
+                <div className="text-base font-bold">
+                  Select Gold Color & Karat: <span className="text-gray-500 font-medium ml-1">14KT Yellow Gold</span>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  <GoldOption metal="White Gold" karat="14KT" color="bg-[#E5E5E5]" />
+                  <GoldOption metal="Yellow Gold" karat="14KT" active color="bg-[#EBC15C]"/>
+                  <GoldOption metal="Rose Gold" karat="14KT" color="bg-[#F6C7C7]"/>
+                  <GoldOption metal="White Gold" karat="18KT" color="bg-[#E5E5E5]"/>
+                  <GoldOption metal="Yellow Gold" karat="18KT" color="bg-[#EBC15C]"/>
+                  <GoldOption metal="Rose Gold" karat="18KT" color="bg-[#F6C7C7]"/>
+                </div>
+              </div>
+
+              {/* Ring Size */}
+              <div className="space-y-4">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="font-semibold text-base">Select Ring Size: <span className="font-medium ml-1">12 IND</span></span>
+                  <button className="text-sm font-medium underline underline-offset-4 decoration-gray-300">Size Guide</button>
+                </div>
+                
+                <div className="bg-[#F8F9FA] rounded-lg flex items-center gap-4 px-4 py-2.5 border border-gray-100">
+                  <div className="bg-white rounded-lg p-2 shadow-sm">
+                    <Play size={16} fill="black" />
+                  </div>
+                  <span className="text-base text-black">Watch this quick video to measure your ring right.</span>
+                </div>
+
+                <div className="grid grid-cols-7 gap-4">
+                  {[5,6,7,8,9,10,11,12,13,14,15,16,17,18].map(size => (
+                    <button
+                      key={size}
+                      className={`relative border rounded-md h-10 flex items-center justify-center text-base transition-all ${
+                        size === 12
+                          ? "border-primary bg-white ring-1 ring-primary font-bold"
+                          : "border-gray-200 hover:border-primary font-normal"
+                      }`}
+                    >
+                      {size.toString().padStart(2,"0")}
+                      <span className="absolute top-1 left-1 w-1.5 h-1.5 bg-[#2DB36F] rounded-full"></span>
+                    </button>
                   ))}
                 </div>
-                <span className="text-sm font-bold">4.9</span>
-              </div>
-
-              <div className="flex items-center gap-3 pt-1">
-                <span className="text-[26px] font-bold">₹99,970</span>
-                <span className="text-[18px] text-gray-400 line-through font-medium">₹126,008</span>
-                <span className="bg-[#F2F2F2] text-black text-[12px] font-bold px-3 py-1 rounded-full">
-                  21% OFF
-                </span>
-                <button className="text-sm font-semibold underline underline-offset-4 ml-auto decoration-gray-300">
-                  See Savings Breakup
-                </button>
-              </div>
-              <p className="text-[12px] text-gray-400 font-medium tracking-tight">Inclusive of all taxes.</p>
-            </div>
-
-            {/* Savings Banners Slider */}
-            <div className="w-full">
-              <Swiper
-                modules={[Autoplay]}
-                spaceBetween={8}
-                slidesPerView={1.5}
-                autoplay={false}
-                loop={true}
-                className="w-full"
-              >
-                <SwiperSlide>
-                  <div className="border border-dashed border-gray-300 rounded-lg px-3 py-3 flex items-center gap-2 bg-white h-full">
-                    <span className="text-base flex-shrink-0">💎</span>
-                    <p className="text-[11px] font-bold text-black whitespace-nowrap">
-                      You're saving flat <span className="font-extrabold text-black">25% OFF</span> on diamond prices.
-                    </p>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="border border-dashed border-gray-300 rounded-lg px-3 py-3 flex items-center gap-2 bg-white h-full">
-                    <span className="text-base flex-shrink-0">🪙</span>
-                    <p className="text-[11px] font-bold text-black whitespace-nowrap">
-                      Save more with <span className="font-extrabold text-black">Lucira coins</span>
-                    </p>
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="border border-dashed border-gray-300 rounded-lg px-3 py-3 flex items-center gap-2 bg-white h-full">
-                    <span className="text-base flex-shrink-0">✨</span>
-                    <p className="text-[11px] font-bold text-black whitespace-nowrap">
-                      Free <span className="font-extrabold text-black">Gift</span> included
-                    </p>
-                  </div>
-                </SwiperSlide>
-              </Swiper>
-            </div>
-
-            {/* Gold Selection */}
-            <div className="space-y-4 pt-4">
-              <div className="text-sm font-bold">
-                Select Gold Color & Karat: <span className="text-gray-500 font-medium ml-1 uppercase">14KT Yellow Gold</span>
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <GoldOption label="14KT White Gold" color="bg-[#E5E5E5]" />
-                <GoldOption label="14KT Yellow Gold" active color="bg-[#EBC15C]"/>
-                <GoldOption label="14KT Rose Gold" color="bg-[#F6C7C7]"/>
-                <GoldOption label="18KT White Gold" color="bg-[#E5E5E5]"/>
-                <GoldOption label="18KT Yellow Gold" color="bg-[#EBC15C]"/>
-                <GoldOption label="18KT Rose Gold" color="bg-[#F6C7C7]"/>
-              </div>
-            </div>
-
-            {/* Ring Size */}
-            <div className="space-y-4 pt-4">
-              <div className="flex justify-between items-center text-sm">
-                <span className="font-bold">Select Ring Size: <span className="font-medium ml-1">12 IND</span></span>
-                <button className="text-[13px] font-bold underline underline-offset-4 decoration-gray-300">Size Guide</button>
-              </div>
-              
-              <div className="bg-[#F8F9FA] rounded-lg flex items-center gap-4 px-4 py-2.5 border border-gray-100">
-                <div className="bg-white rounded-lg p-2 shadow-sm">
-                  <Play size={16} fill="black" />
+                <p className="text-sm text-black font-medium">Didn't get the size right? We'll exchange it.</p>                
+                <div className="bg-[#ECF7F2] border border-[#B3E1CD] text-black  rounded-lg px-4 py-3 flex items-center gap-1">
+                  <span className="w-2.5 h-2.5 bg-[#189351] rounded-full"></span>
+                  This combination is <span className="font-semibold">in-stock & ready to ship in 24 hrs</span>
                 </div>
-                <span className="text-[13px] font-bold text-gray-700">Watch this quick video to measure your ring right.</span>
               </div>
-
-              <div className="grid grid-cols-7 gap-2">
-                {[5,6,7,8,9,10,11,12,13,14,15,16,17,18].map(size => (
-                  <button
-                    key={size}
-                    className={`relative border rounded-md h-12 flex items-center justify-center text-sm transition-all ${
-                      size === 12
-                        ? "border-black bg-white ring-1 ring-black font-bold"
-                        : "border-gray-200 hover:border-black font-medium"
-                    }`}
-                  >
-                    {size.toString().padStart(2,"0")}
-                    <span className="absolute top-1 left-1 w-1.5 h-1.5 bg-[#2DB36F] rounded-full"></span>
-                  </button>
-                ))}
-              </div>
-              <p className="text-[13px] text-gray-500 font-medium">Didn't get the size right? We'll exchange it.</p>
-              
-              <div className="bg-[#ECF7F2] border border-[#B3E1CD] text-[#1E7D4E] text-[13px] rounded-lg px-4 py-3 flex items-center gap-3 font-bold">
-                <span className="w-2.5 h-2.5 bg-[#2DB36F] rounded-full"></span>
-                This combination is <span className="font-bold">in-stock & ready to ship in 24 hrs</span>
-              </div>
+              <Separator />
             </div>
+
+
 
             {/* Engraving */}
             <div className="space-y-3 pt-4 border-t border-gray-100">
@@ -244,10 +262,10 @@ export default function ProductPage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4 pt-2">
-              <Button className="flex-1 h-14 text-[16px] font-bold bg-black text-white hover:bg-gray-800 rounded-md">
+              <Button className="flex-1 h-14 text-[16px] font-bold  rounded-md hover:cursor-pointer">
                 ADD TO CART
               </Button>
-              <Button variant="outline" size="icon" className="h-14 w-14 rounded-md border-gray-200 hover:bg-gray-50">
+              <Button variant="outline" size="icon" className="h-14 w-14 rounded-md border-gray-200 hover:bg-gray-50 hover:cursor-pointer">
                 <Heart size={24} className="text-black" />
               </Button>
             </div>
@@ -294,7 +312,7 @@ export default function ProductPage() {
                   defaultValue="411005"
                   className="h-12 bg-white border-gray-200 rounded-md text-sm font-medium"
                 />
-                <Button className="h-12 px-10 font-bold bg-black text-white hover:bg-gray-800 rounded-md">
+                <Button className="h-12 px-10 font-bold rounded-md">
                   CHECK
                 </Button>
               </div>
@@ -317,7 +335,7 @@ export default function ProductPage() {
               <p className="text-[13px] text-gray-500 font-bold">
                 Also available in <button className="text-black underline underline-offset-2 decoration-gray-300">2 other stores</button>
               </p>
-              <Button className="w-full h-12 font-bold bg-black text-white hover:bg-gray-800 rounded-md">
+              <Button className="w-full h-12 font-bold rounded-md">
                 FIND IN STORE
               </Button>
             </div>
@@ -328,12 +346,12 @@ export default function ProductPage() {
                 spaceBetween={12}
                 slidesPerView={1.2}
                 onSlideChange={(swiper) => setActivePromoSlide(swiper.activeIndex + 1)}
-                className="w-full !overflow-visible"
+                className="w-full overflow-visible!"
               >
                 {[1, 2, 3].map((i) => (
                   <SwiperSlide key={i}>
                     <div className="bg-[#F9F9F9] border border-gray-100 rounded-xl p-5 flex items-center gap-5 h-full">
-                      <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-sm flex-shrink-0">
+                      <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-sm shrink-0">
                         <Image src="/images/story-ring.jpg" alt="gold coin" fill className="object-cover" />
                       </div>
                       <div className="space-y-1">
@@ -432,7 +450,7 @@ export default function ProductPage() {
                   
                   <div className="bg-[#EDEDED] rounded-md px-4 py-2 flex items-center gap-2.5 w-fit">
                     <div className="w-4 h-4 rounded-full bg-gray-500 flex items-center justify-center text-[10px] text-white font-bold italic">i</div>
-                    <span className="text-[14px] font-bold text-gray-700">Clarity & Color: VVS-VS, EF</span>
+                    <span className="text-sm font-bold text-gray-700">Clarity & Color: VVS-VS, EF</span>
                   </div>
 
                   <div className="grid grid-cols-3 gap-0 pt-4">
@@ -459,7 +477,7 @@ export default function ProductPage() {
                   </div>
                 </div>
 
-                <p className="pt-4 text-[14px] text-gray-900 font-bold leading-relaxed">
+                <p className="pt-4 text-sm text-gray-900 font-bold leading-relaxed">
                   Our products are handcrafted and personalised for your delight, hence a weight variance is expected.
                 </p>
               </div>
@@ -471,7 +489,7 @@ export default function ProductPage() {
             <div className="pt-10">
               <div className="bg-[#FAFAFA] border border-gray-100 rounded-xl p-8">
                 <div className="flex items-center gap-3 text-[18px] font-bold text-black mb-6">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black flex-shrink-0">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black shrink-0">
                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/>
                   </svg>
                   Certified Quality Guaranteed.
@@ -528,7 +546,7 @@ function DiamondDetail({ img, shape, pcs, carat, showLeftBorder }) {
       <div className="w-14 h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center p-1 overflow-hidden shadow-sm relative">
         <Image src={img} alt={shape} fill className="object-cover p-1 rounded-full" />
       </div>
-      <div className="space-y-2 text-[14px] font-bold">
+      <div className="space-y-2 text-sm font-bold">
         <div className="flex justify-between items-center gap-2">
           <span className="text-gray-500 font-medium">Shape:</span>
           <span className="text-black">{shape}</span>
@@ -549,7 +567,7 @@ function DiamondDetail({ img, shape, pcs, carat, showLeftBorder }) {
 function DiamondInfo({ img, shape, pcs, carat }) {
   return (
     <div className="flex gap-4 border-l border-gray-100 pl-6 first:border-none first:pl-0">
-      <div className="w-14 h-14 rounded-full bg-[#F7F7F7] flex items-center justify-center flex-shrink-0 relative overflow-hidden border border-gray-100">
+      <div className="w-14 h-14 rounded-full bg-[#F7F7F7] flex items-center justify-center shrink-0 relative overflow-hidden border border-gray-100">
         <Image src={img} alt={shape} fill className="object-cover p-1.5 rounded-full" />
       </div>
       <div className="space-y-1 text-[13px] font-bold">
@@ -564,7 +582,7 @@ function DiamondInfo({ img, shape, pcs, carat }) {
 function ExploreCard({ title, description, action, img }) {
   return (
     <div className="bg-[#F9F9F9] border border-gray-100 rounded-lg p-4 flex items-center gap-5">
-      <div className="w-24 h-16 rounded-md bg-gray-200 flex-shrink-0 relative overflow-hidden shadow-sm">
+      <div className="w-24 h-16 rounded-md bg-gray-200 shrink-0 relative overflow-hidden shadow-sm">
         {img && <Image src={img} alt={title} fill className="object-cover" />}
       </div>
       <div className="flex-1 space-y-1">
@@ -586,7 +604,7 @@ function ExploreCard({ title, description, action, img }) {
 function Feature({ icon, text }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         {icon}
       </div>
       <span className="leading-tight tracking-tight">{text}</span>
@@ -594,20 +612,21 @@ function Feature({ icon, text }) {
   );
 }
 
-function GoldOption({ label, color, active }) {
+function GoldOption({ metal, karat, color, active }) {
   return (
     <div
-      className={`border rounded-lg p-4 cursor-pointer relative flex flex-col items-center gap-3 transition-all ${
+      className={`border rounded-lg py-2 px-4 cursor-pointer relative flex flex-col items-center gap-3 transition-all ${
         active
-          ? "border-black bg-white ring-1 ring-black shadow-sm"
+          ? "border-primary bg-white ring-1 ring-primary shadow-sm"
           : "border-gray-200 bg-[#F9F9F9] hover:border-gray-300"
       }`}
     >
       <span className={`absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-[#2DB36F]`}></span>
-      <div className={`w-8 h-8 rounded-full border border-gray-100 shadow-inner ${color}`}></div>
-      <span className={`text-[11px] font-bold text-center leading-tight uppercase tracking-tight ${active ? "text-black" : "text-gray-500"}`}>
-        {label}
-      </span>
+      <div className={`w-7 h-7 rounded-full border border-gray-100 shadow-inner ${color}`}></div>
+      <div className={`text-sm text-center text-black leading-tight uppercase tracking-tight flex flex-col gap-1 ${active ? "font-semibold" : "font-normal"}`}>
+        <span>{karat}</span>
+        <span>{metal}</span>
+      </div>
     </div>
   );
 }

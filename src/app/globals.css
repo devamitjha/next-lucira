@@ -45,6 +45,9 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  /*custome font size*/
+  --text-28px:var(--font-28px);
+  --text-12px:var(--font-12px);
 }
   :root {
   --radius: 0.65rem;
@@ -89,6 +92,9 @@
   --sidebar-accent-foreground: oklch(0.25 0.03 35);
   --sidebar-border: oklch(0.92 0.01 35);
   --sidebar-ring: #b67665;
+  /*custome font size*/
+  --font-28px:1.75rem;
+  --font-12px:75rem;
 }
 
 .dark {
