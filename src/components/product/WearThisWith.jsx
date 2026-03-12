@@ -46,9 +46,8 @@ export default function WearThisWith() {
   const [activeSlide, setActiveSlide] = useState(0);
 
   return (
-    <div className="pt-10 border-t border-gray-100 mt-10">
-      <h2 className="text-[20px] font-bold text-black mb-6">Wear This With:</h2>
-      
+    <div className="pt-4 border-t border-gray-100">
+      <h2 className="text-base font-semibold text-black mb-4">Wear This With:</h2>      
       <div className="relative group">
         <Swiper
           modules={[Navigation, Pagination]}

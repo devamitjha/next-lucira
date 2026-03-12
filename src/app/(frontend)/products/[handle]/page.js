@@ -94,7 +94,6 @@ export default function ProductPage() {
 
           {/* Right: Product Info */}
           <div className="w-full">
-
             <div className="space-y-4">
               {/* Title */}
               <div className="w-full">
@@ -174,10 +173,8 @@ export default function ProductPage() {
                 </Swiper>
               </div>
               <Separator />
-            </div>
-            
-            
-            
+            </div> 
+
             <div className="space-y-6 mt-4">
               {/* Gold Selection */}
               <div className="space-y-3">
@@ -232,8 +229,6 @@ export default function ProductPage() {
               <Separator />
             </div>
 
-
-
             {/* Engraving */}
             <div className="mt-4 mb-6">
               <div className="space-y-2">
@@ -283,10 +278,9 @@ export default function ProductPage() {
                 </Button>
               </div>
             </div>
-
            
-            <div className="space-y-4">
             {/* Features */}
+            <div className="space-y-4">
               <div className="flex justify-between items-center gap-x-4 text-sm font-medium text-black">
                 <div className="flex flex-col space-y-4.5 flex-1">
                     <Feature icon={<Image src="/images/product/shipping.svg" alt="" width={20} height={20} />} text="Free and secure shipping" />
@@ -395,30 +389,29 @@ export default function ProductPage() {
                   <span className="text-[12px] font-bold tracking-tight text-black">{activePromoSlide}/3</span>
                 </div>
               </div>
-              <Separator/>
-            
+              <Separator/>            
             </div>
-             {/* Explore Section */}
-              <div className="space-y-4 mt-4">
-                <h3 className="text-base font-semibold">More Ways To Explore:</h3>
-                <ExploreCard
-                  title="Visit Our Store"
-                  description="Explore and try your favorite designs in person, with expert guidance from our in-store team."
-                  action="BOOK APPOINTMENT"
-                  img="/images/store.jpg"
-                />
-                <ExploreCard
-                  title="Try At Home"
-                  description="Try your selected pieces from the comfort of your home. Available in all major cities"
-                  action="BOOK HOME TRIAL"
-                  img="/images/subscribe-2.jpg"
-                />
-                <Separator/>
-              </div>
+            {/* Explore Section */}
+            <div className="space-y-4 mt-4">
+              <h3 className="text-base font-semibold">More Ways To Explore:</h3>
+              <ExploreCard
+                title="Visit Our Store"
+                description="Explore and try your favorite designs in person, with expert guidance from our in-store team."
+                action="BOOK APPOINTMENT"
+                img="/images/store.jpg"
+              />
+              <ExploreCard
+                title="Try At Home"
+                description="Try your selected pieces from the comfort of your home. Available in all major cities"
+                action="BOOK HOME TRIAL"
+                img="/images/subscribe-2.jpg"
+              />
+              <Separator/>
+            </div>
 
             {/* Product Details Section */}
             <div className="space-y-4 mt-4">
-              <h2 className="text-[20px] font-bold tracking-tight">Product Details:</h2>
+              <h2 className="text-base font-semibold tracking-tight">Product Details:</h2>
               <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 space-y-4">
                 {/* Metal & Dimensions */}
                 <div className="flex gap-3 relative justify-between">
@@ -456,46 +449,32 @@ export default function ProductPage() {
                     </div>
                   </div>
                 </div>
-
-                <div className="h-px bg-gray-200 w-full"></div>
-
+                <Separator/>
                 {/* Diamond Section */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-2 font-bold text-[15px] uppercase tracking-wide">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 font-semibold text-sm uppercase tracking-wide">
                     <Image src="/images/icons/diamond.svg" alt="" width={18} height={18} />
                     Diamond
                   </div>
                   
                   <div className="bg-[#EDEDED] rounded-md px-4 py-2 flex items-center gap-2.5 w-fit">
-                    <div className="w-4 h-4 rounded-full bg-gray-500 flex items-center justify-center text-[10px] text-white font-bold italic">i</div>
-                    <span className="text-sm font-bold text-gray-700">Clarity & Color: VVS-VS, EF</span>
+                    <div className="w-5 h-5 rounded-full bg-gray-500 flex items-center justify-center text-12px text-white font-semibold">i</div>
+                    <span className="text-12px">Clarity & Color: <span className="font-medium">VVS-VS, EF</span></span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-0 pt-4">
-                    <DiamondDetail 
-                      img="/images/product/1.jpg"
-                      shape="Round"
-                      pcs="1"
-                      carat="2.00ct"
-                    />
-                    <DiamondDetail 
-                      img="/images/product/2.jpg"
-                      shape="Round"
-                      pcs="4"
-                      carat="0.048ct"
-                      showLeftBorder
-                    />
-                    <DiamondDetail 
-                      img="/images/product/3.jpg"
-                      shape="Marquise"
-                      pcs="4"
-                      carat="0.48ct"
-                      showLeftBorder
-                    />
+                  <div className="flex divide-x divide-gray-200">
+                    {[ 
+                      { img: "/images/product/1.jpg", shape: "Round", pcs: "1", carat: "2.00ct" },
+                      { img: "/images/product/2.jpg", shape: "Round", pcs: "4", carat: "0.048ct" },
+                      { img: "/images/product/3.jpg", shape: "Marquise", pcs: "4", carat: "0.48ct" }
+                    ].map((d, i) => (
+                      <DiamondDetail key={i} {...d} index={i} />
+                    ))}
                   </div>
+                  <Separator/>
                 </div>
 
-                <p className="pt-4 text-sm text-gray-900 font-bold leading-relaxed">
+                <p className="text-12px leading-relaxed">
                   Our products are handcrafted and personalised for your delight, hence a weight variance is expected.
                 </p>
               </div>
@@ -504,35 +483,37 @@ export default function ProductPage() {
             <PriceSavingsDetails/>
 
             {/* Certification */}
-            <div className="pt-10">
-              <div className="bg-[#FAFAFA] border border-gray-100 rounded-xl p-8">
-                <div className="flex items-center gap-3 text-[18px] font-bold text-black mb-6">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-black shrink-0">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/>
-                  </svg>
+            <div className="pt-6">
+              <div className="bg-gray-50 border border-gray-100 rounded-xl ps-4 pe-16 py-4">
+                <div className="flex items-center gap-2 text-base font-semibold text-black mb-4">
+                  <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.91667 13.25H1.58333C1.36232 13.25 1.15036 13.1622 0.994078 13.0059C0.837797 12.8496 0.75 12.6377 0.75 12.4167V1.58333C0.75 1.36232 0.837797 1.15036 0.994078 0.994078C1.15036 0.837797 1.36232 0.75 1.58333 0.75H16.5833C16.8043 0.75 17.0163 0.837797 17.1726 0.994078C17.3289 1.15036 17.4167 1.36232 17.4167 1.58333V12.4167C17.4167 12.6377 17.3289 12.8496 17.1726 13.0059C17.0163 13.1622 16.8043 13.25 16.5833 13.25H13.25M4.08333 4.08333H14.0833M4.08333 7H6.58333M4.08333 9.91667H5.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M11.583 12C12.246 12 12.8819 11.7366 13.3508 11.2678C13.8196 10.7989 14.083 10.163 14.083 9.5C14.083 8.83696 13.8196 8.20107 13.3508 7.73223C12.8819 7.26339 12.246 7 11.583 7C10.92 7 10.2841 7.26339 9.81524 7.73223C9.3464 8.20107 9.08301 8.83696 9.08301 9.5C9.08301 10.163 9.3464 10.7989 9.81524 11.2678C10.2841 11.7366 10.92 12 11.583 12Z" stroke="black" strokeWidth="1.5"/>
+                    <path d="M11.5837 14.9166L13.2503 15.7499V11.3633C13.2503 11.3633 12.7753 11.9999 11.5837 11.9999C10.392 11.9999 9.91699 11.3749 9.91699 11.3749V15.7499L11.5837 14.9166Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+
                   Certified Quality Guaranteed.
                 </div>
                 <div className="flex items-start justify-between gap-4">
-                  <button className="text-[16px] font-bold underline underline-offset-[6px] decoration-black mt-1 whitespace-nowrap">
+                  <button className="text-sm font-semibold underline underline-offset-[6px] decoration-black mt-1 whitespace-nowrap">
                     See Sample Certificate
                   </button>
-                  <div className="flex items-center gap-5">
-                    <div className="w-[60px] h-[60px] relative">
+                  <div className="flex items-center gap-7">
+                    <div className="w-14 h-14 relative">
                       <Image src="/images/product/IGI.png" alt="IGI" fill className="object-contain" />
                     </div>
-                    <div className="w-[80px] h-[40px] relative">
+                    <div className="w-14 h-14 relative">
                       <Image src="/images/product/SGL.png" alt="SGL" fill className="object-contain" />
                     </div>
-                    <div className="w-[80px] h-[40px] relative">
+                    <div className="w-14 h-14 relative">
                       <Image src="/images/product/BIS.png" alt="BIS Hallmark" fill className="object-contain" />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
+            
             <ProductAccordion/>
-
             {/* Wear This With Slider */}
             <WearThisWith />
 
@@ -558,26 +539,43 @@ export default function ProductPage() {
   );
 }
 
-function DiamondDetail({ img, shape, pcs, carat, showLeftBorder }) {
+function DiamondDetail({ img, shape, pcs, carat }) {
   return (
-    <div className={`flex flex-col gap-4 ${showLeftBorder ? 'border-l border-gray-200 pl-8' : 'pr-8'}`}>
-      <div className="w-14 h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center p-1 overflow-hidden shadow-sm relative">
-        <Image src={img} alt={shape} fill className="object-cover p-1 rounded-full" />
-      </div>
-      <div className="space-y-2 text-sm font-bold">
-        <div className="flex justify-between items-center gap-2">
-          <span className="text-gray-500 font-medium">Shape:</span>
-          <span className="text-black">{shape}</span>
-        </div>
-        <div className="flex justify-between items-center gap-2">
-          <span className="text-gray-500 font-medium">No. of Pcs:</span>
-          <span className="text-black">{pcs}</span>
-        </div>
-        <div className="flex justify-between items-center gap-2">
-          <span className="text-gray-500 font-medium">Carat:</span>
-          <span className="text-black">{carat}</span>
+    <div className="flex-1 ps-6 pe-6 first:ps-0 last:pe-0 flex flex-col items-start">
+
+      {/* Diamond Image */}
+      <div className="flex justify-start w-full mb-5">
+        <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center overflow-hidden bg-white">
+          <Image
+            src={img}
+            alt={shape}
+            width={40}
+            height={40}
+            className="object-cover"
+          />
         </div>
       </div>
+
+      {/* Details */}
+      <div className="space-y-2 text-12px w-full">
+
+        <div className="flex justify-between">
+          <span className="w-18">Shape:</span>
+          <span className="font-medium">{shape}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="w-18">No. of Pcs:</span>
+          <span className="font-medium">{pcs}</span>
+        </div>
+
+        <div className="flex justify-between">
+          <span className="w-18">Carat:</span>
+          <span className="font-medium">{carat}</span>
+        </div>
+
+      </div>
+
     </div>
   );
 }

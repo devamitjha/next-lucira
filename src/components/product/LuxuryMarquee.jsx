@@ -11,7 +11,7 @@ export default function LuxuryMarquee() {
   ];
 
   return (
-    <div className="relative bg-primary text-white py-4 overflow-hidden mt-6">
+    <div className="relative bg-primary text-white py-4 overflow-hidden mt-10">
 
       {/* edge gradient fade */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-linear-to-r from-primary to-transparent z-10"></div>
