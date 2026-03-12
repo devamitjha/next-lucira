@@ -190,7 +190,7 @@ export default function CustomerReviews() {
         </div>
 
         {/* Read More */}
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-12">
           <Button variant="outline" className="border-black text-black px-10 py-6 font-bold hover:bg-black hover:text-white transition-all rounded-sm">
             READ MORE REVIEWS
           </Button>

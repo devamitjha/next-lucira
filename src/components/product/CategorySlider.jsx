@@ -27,9 +27,9 @@ export default function CategorySlider() {
   const paginationElClass = `pagination-${id}`;
 
   return (
-    <section className="w-full py-16 bg-[#FAFAFA] overflow-hidden mt-15">
+    <section className="w-full py-15 bg-[#FAFAFA] overflow-hidden mt-15">
       <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
-        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-black">Explore Our Categories</h2>
+        <h2 className="text-28px font-bold mb-6 text-black">Explore Our Categories</h2>
 
         <div className="relative">
           <Swiper
@@ -44,7 +44,7 @@ export default function CategorySlider() {
               el: `.${paginationElClass}`,
               clickable: true,
               renderBullet: (index, className) => {
-                return `<span class="${className} !w-6 !h-1 !rounded-full !bg-gray-300 transition-all duration-300 [&.swiper-pagination-bullet-active]:!bg-black [&.swiper-pagination-bullet-active]:!w-10"></span>`;
+                return `<span class="${className} w-6! h-1! rounded-full! bg-gray-300! transition-all duration-300 [&.swiper-pagination-bullet-active]:bg-black! [&.swiper-pagination-bullet-active]:w-10!"></span>`;
               },
             }}
             breakpoints={{
@@ -56,7 +56,7 @@ export default function CategorySlider() {
           >
             {CATEGORIES.map((category) => (
               <SwiperSlide key={category.id}>
-                <Link href={`/collections/${category.handle}`} className="group block relative aspect-[4/5] bg-[#EFEFEF] overflow-hidden rounded-sm">
+                <Link href={`/collections/${category.handle}`} className="group block relative aspect-4/5 bg-[#EFEFEF] overflow-hidden rounded-sm">
                   {/* Category Image */}
                   <div className="w-full h-full transition-transform duration-700 group-hover:scale-110">
                     <Image
@@ -68,10 +68,10 @@ export default function CategorySlider() {
                   </div>
 
                   {/* Category Info Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6 flex justify-between items-center bg-gradient-to-t from-black/5 to-transparent">
-                    <span className="text-xl font-bold text-black">{category.name}</span>
-                    <div className="w-10 h-10 rounded-full border border-black flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:text-white">
-                      <ArrowRight size={20} />
+                  <div className="absolute bottom-0 left-0 right-0 px-4 pb-5 flex justify-between items-center bg-linear-to-t from-black/5 to-transparent">
+                    <span className="text-[22px] font-semibold text-black">{category.name}</span>
+                    <div className="w-8 h-8 rounded-full border border-black flex items-center justify-center transition-all duration-300 group-hover:bg-black group-hover:text-white">
+                      <ArrowRight size={18} />
                     </div>
                   </div>
                 </Link>
@@ -80,7 +80,7 @@ export default function CategorySlider() {
           </Swiper>
 
           {/* Navigation & Pagination Controls */}
-          <div className="flex justify-between items-center mt-10">
+          <div className="flex justify-between items-center mt-11">
             {/* Pagination on the left */}
             <div className={`${paginationElClass} flex items-center gap-2`}></div>
             

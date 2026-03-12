@@ -56,30 +56,30 @@ export default function DiamondComparison() {
   return (
     <section className="w-full py-16 bg-[#F9F9F9] mt-15">
       <div className="max-w-480 mx-auto px-46 min-[1440px]:px-46">
-        <h2 className="text-[32px] font-bold text-center mb-20 text-black">
+        <h2 className="text-28px font-bold text-black text-center mb-15">
           Lab Grown Vs. Mined Diamonds
         </h2>
 
         <div className="relative">
           {/* Highlight Container for the middle column */}
-          <div className="absolute top-[-30px] bottom-[-30px] left-[35.5%] w-[33%] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] z-0"></div>
+          <div className="absolute -top-7.5 -bottom-7.5 left-[35.5%] w-[33%] bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] z-0"></div>
 
           <div className="grid grid-cols-[1.5fr_1.3fr_1.3fr] relative z-10">
             {/* Table Header */}
-            <div className="pb-10 px-4 text-lg font-bold text-black flex items-end">
+            <div className="pb-10 px-4 text-xl font-semibold text-black flex items-end">
               Comparison Basis
             </div>
-            <div className="pb-10 text-center text-lg font-bold text-black flex items-end justify-center">
+            <div className="pb-10 text-center text-xl font-semibold text-black flex items-end justify-center">
               Lab-Grown Diamond
             </div>
-            <div className="pb-10 text-center text-lg font-bold text-black flex items-end justify-center">
+            <div className="pb-10 text-center text-xl font-semibold text-black flex items-end justify-center">
               Mined Diamond
             </div>
 
             {/* Table Rows */}
             {rows.map((row, i) => (
               <React.Fragment key={i}>
-                <div className="py-7 px-4 border-t border-[#E5E5E5] text-[15px] font-medium text-black leading-snug flex items-center">
+                <div className="py-7 px-4 border-t border-[#E5E5E5] text-lg font-semibold text-black leading-snug flex items-center">
                   {row.label}
                 </div>
                 <div className="py-7 border-t border-[#E5E5E5] flex items-center justify-center">
@@ -95,21 +95,21 @@ export default function DiamondComparison() {
 
         {/* Bottom Info Section */}
         <div className="mt-20 space-y-4">
-          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl p-6">
+          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl px-6 py-3">
             <div className="w-8 h-8 flex items-center justify-center">
               <RefreshCw size={22} className="text-black" />
             </div>
-            <p className="text-[16px] text-black font-medium">
+            <p className="text-lg text-black font-medium">
               Every lab-grown diamond jewelry by Lucira comes with lifetime
               buyback assurance.
             </p>
           </div>
 
-          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl p-6">
+          <div className="flex gap-5 items-center bg-[#EDEDED] rounded-xl px-6 py-3">
             <div className="w-8 h-8 flex items-center justify-center">
               <Sparkle size={22} className="text-black fill-black" />
             </div>
-            <p className="text-[16px] text-black font-medium leading-relaxed">
+            <p className="text-lg text-black font-medium leading-relaxed">
               The only real difference is how they&apos;re formed; lab-grown and
               natural diamonds are optically identical, with no visible
               difference to the naked eye, with distinctions detectable only

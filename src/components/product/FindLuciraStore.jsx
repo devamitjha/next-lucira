@@ -7,20 +7,20 @@ import Image from "next/image";
 
 export function FindLuciraStore() {
   return (
-    <section className="w-full py-16 bg-[#F9F9F9] mt-15">
+    <section className="w-full py-8 bg-gray-50 mt-15">
       <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
         <div className="w-full text-center mb-12">
-          <h2 className="text-3xl font-bold mb-8">
+          <h2 className="text-28px font-bold mb-4">
             Find in Lucira Store Near You
           </h2>
 
           {/* Pincode */}
-          <div className="flex justify-center items-center gap-0 mb-4 max-w-xl mx-auto">
+          <div className="flex justify-center items-center gap-0 mb-3 max-w-xl mx-auto">
             <Input
               placeholder="Enter pin code to check delivery time"
-              className="h-12 rounded-r-none border-r-0 focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D1D1D1] placeholder:text-gray-400"
+              className="h-12 rounded-r-none border-r-0 focus-visible:ring-0 focus-visible:ring-offset-0 border-[#D1D1D1] placeholder:text-gray-400 placeholder:text-sm"
             />
-            <Button className="h-12 px-10 rounded-l-none bg-black hover:bg-black/90 text-white font-bold tracking-widest">
+            <Button className="h-12 px-10 rounded-l-none bg-black hover:bg-black/90 text-white text-sm font-bold tracking-widest">
               CHECK
             </Button>
           </div>
@@ -32,9 +32,9 @@ export function FindLuciraStore() {
         </div>
 
         {/* Store Card */}
-        <div className="w-full bg-white border border-[#E5E5E5] rounded-sm overflow-hidden grid md:grid-cols-[45%_55%] min-h-[450px]">
+        <div className="w-full bg-white border border-[#E5E5E5] rounded-sm overflow-hidden grid md:grid-cols-[45%_55%] min-h-112.5">
           {/* Map / Image */}
-          <div className="relative h-full min-h-[380px]">
+          <div className="relative h-full min-h-95">
             <Image
               src="/images/store.jpg"
               alt="Pune Lucira Store"
@@ -48,32 +48,32 @@ export function FindLuciraStore() {
           </div>
 
           {/* Store Info */}
-          <div className="p-8 md:p-12 flex flex-col justify-between">
-            <div className="space-y-6">
+          <div className="px-10 py-5 md:px-12 md:py-5 flex flex-col justify-center">
+            <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-2xl font-bold italic mb-4">
+                  <h3 className="text-2xl font-semibold italic mb-4">
                     Pune Lucira Store
                   </h3>
-                  <p className="text-[#333333] leading-relaxed max-w-md">
+                  <p className="leading-relaxed max-w-md">
                     Shop no. 3,4, Balgandharv Chowk, Sai Square, 5 & 6,
                     Jangali Maharaj Rd, Pune, Maharashtra 411005
                   </p>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <div className="flex items-center">
                     {[1, 2, 3, 4, 5].map((i) => (
                       <Star key={i} size={16} fill="#FFC107" color="#FFC107" />
                     ))}
                   </div>
-                  <span className="text-sm font-medium text-gray-600 ml-1">4.8</span>
+                  <span className="text-sm">4.8</span>
                 </div>
               </div>
 
               <div className="bg-[#F3F4F6] px-5 py-3 rounded-full flex items-center gap-3 w-fit">
-                <Clock size={18} className="text-gray-700" />
-                <span className="text-sm font-medium text-gray-700">
-                  Timings: <span className="font-normal text-gray-600 ml-1">Monday - Sunday | 10:30 am - 10:00 pm</span>
+                <Clock size={18} className="text-black" />
+                <span className="text-base font-semibold">
+                  Timings: <span className="font-normal ml-1">Monday - Sunday | 10:30 am - 10:00 pm</span>
                 </span>
               </div>
 
@@ -85,12 +85,12 @@ export function FindLuciraStore() {
                     <p className="font-bold text-sm leading-tight">
                       2 CT Round Cut with Side Diamonds Accent Engagement Ring
                     </p>
-                    <div className="bg-white border border-gray-100 rounded-sm p-2 flex flex-col gap-1 w-fit">
-                      <div className="flex items-center gap-2 text-[10px] text-gray-500 uppercase font-semibold">
+                    <div className="bg-gray-100 border border-gray-100 rounded-sm p-2 flex flex-col gap-1 w-fit">
+                      <div className="flex items-center gap-2">
                          <Clock size={12} className="text-black" />
-                         <span>Size 12 | Yellow Gold</span>
+                         <span className="text-xs">Size 12 | Yellow Gold</span>
                       </div>
-                      <p className="text-[10px] font-bold">
+                      <p className="text-xs font-semibold">
                         Available by 27 January, 2026
                       </p>
                     </div>
@@ -100,19 +100,19 @@ export function FindLuciraStore() {
             </div>
 
             {/* Actions */}
-            <div className="flex flex-wrap gap-3 pt-8">
-              <Button variant="outline" className="h-12 px-6 rounded-sm border-black text-xs font-bold tracking-wider hover:bg-black hover:text-white transition-colors">
-                <Navigation size={18} className="mr-2" />
+            <div className="flex flex-wrap gap-3 pt-5">
+              <Button variant="outline" className="h-12 px-6! hover:cursor-pointer rounded-sm border-primary text-base font-medius tracking-wider hover:bg-primary hover:text-white transition-colors">
+                <Navigation size={18} />
                 DIRECT ME
               </Button>
 
-              <Button variant="outline" className="h-12 px-6 rounded-sm border-black text-xs font-bold tracking-wider hover:bg-black hover:text-white transition-colors">
-                <Phone size={18} className="mr-2" />
+              <Button variant="outline" className="h-12 px-6! hover:cursor-pointer rounded-sm border-primary text-base font-medius tracking-wider hover:bg-primary hover:text-white transition-colors">
+                <Phone size={18} />
                 CALL US
               </Button>
 
-              <Button className="h-12 px-6 rounded-sm bg-black text-white text-xs font-bold tracking-wider hover:bg-black/90">
-                <Calendar size={18} className="mr-2" />
+              <Button className="h-12 px-6! hover:cursor-pointer rounded-sm text-white text-base font-medius tracking-wider">
+                <Calendar size={18} />
                 BOOK APPOINTMENT
               </Button>
             </div>
@@ -120,7 +120,7 @@ export function FindLuciraStore() {
         </div>
 
         {/* Carousel Controls */}
-        <div className="flex justify-between items-center mt-8 px-2">
+        <div className="flex justify-between items-center mt-6 px-2">
           <div className="flex items-center gap-2">
             <div className="w-8 h-1.5 bg-black rounded-full"></div>
             <div className="w-2 h-2 bg-gray-300 rounded-full"></div>

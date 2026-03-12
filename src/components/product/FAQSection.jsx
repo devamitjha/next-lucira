@@ -41,7 +41,7 @@ export default function QuestionsAnswered() {
   ];
 
   return (
-    <section className="w-full py-16 bg-gray-50 mt-15"> 
+    <section className="w-full py-12 bg-gray-50 mt-15"> 
 
       <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17 grid lg:grid-cols-[1fr_480px] gap-16">
 
@@ -49,11 +49,11 @@ export default function QuestionsAnswered() {
 
         <div>
 
-          <h2 className="text-[22px] font-semibold mb-8">
+          <h2 className="text-28px font-bold mb-6 text-black">
             Your Questions Answered
           </h2>
 
-          <div className="border-t">
+          <div className="w-full">
 
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
@@ -67,12 +67,12 @@ export default function QuestionsAnswered() {
                     }
                     className="flex items-center justify-between w-full text-left"
                   >
-                    <span className="font-medium text-[15px]">
+                    <span className="font-semibold text-base">
                       {faq.question}
                     </span>
 
                     <span className="text-xl">
-                      {isOpen ? "−" : "+"}
+                      {isOpen ? "-" : "+"}
                     </span>
                   </button>
 
@@ -92,7 +92,7 @@ export default function QuestionsAnswered() {
                         transition={{ duration: 0.25 }}
                         className="overflow-hidden"
                       >
-                        <p className="text-sm text-gray-600 leading-relaxed mt-4 max-w-130">
+                        <p className="text-sm leading-relaxed mt-4 max-w-130">
                           {faq.answer}
                         </p>
                       </motion.div>
