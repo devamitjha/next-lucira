@@ -18,18 +18,18 @@ export default function FeaturedIn() {
   ];
 
   return (
-    <section className="w-full py-16 bg-gray-50">
+    <section className="w-full py-6 bg-gray-50">
 
-      <div className="w-full text-center space-y-8">
-        <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17">
-          <h2 className="text-xl font-semibold">
+      <div className="w-full text-center">
+        <div className="max-w-480 mx-auto px-17 min-[1440px]:px-17 space-y-8 mb-5">
+          <h2 className="text-28px font-bold">
             Featured In
           </h2>
           <p className="text-muted-foreground max-w-3xl mx-auto">
             “Lucira Jewelry focuses on modern fine jewellery, featuring
             lab-grown diamonds and expert craftsmanship.”
           </p>
-      </div>
+        </div>
 
         {/* Marquee */}
 
@@ -37,8 +37,8 @@ export default function FeaturedIn() {
 
           {/* edge fade */}
 
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-gray-50 to-transparent z-10"></div>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-gray-50 to-transparent z-10"></div>
+          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-linear-to-r from-gray-50 to-transparent z-10"></div>
+          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-linear-to-l from-gray-50 to-transparent z-10"></div>
 
           <Marquee
             speed={60}
