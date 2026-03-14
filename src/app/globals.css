@@ -48,6 +48,9 @@
   /*custome font size*/
   --text-28px:var(--font-28px);
   --text-12px:var(--font-12px);
+  /*font-family*/
+  --font-abhaya: var(--font-abhaya);
+  --font-figtree: var(--font-figtree);
 }
   :root {
     --radius: 0.65rem;
@@ -404,4 +407,5 @@
   display: block;
   clear: both;
 }
+/*Hero Slider*/
 
