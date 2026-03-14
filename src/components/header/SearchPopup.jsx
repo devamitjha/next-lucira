@@ -45,6 +45,14 @@ export default function SearchPopup({ onClose }) {
     "Pendants",
   ];
 
+  const TRENDING_PRODUCTS = [
+    { id: '1', title: "Solitaire Diamond Ring", handle: "solitaire-diamond-ring", price: "₹45,000", comparePrice: "₹55,000", image: "/images/product/1.jpg" },
+    { id: '2', title: "Infinity Gold Necklace", handle: "infinity-gold-necklace", price: "₹28,000", comparePrice: "₹35,000", image: "/images/product/2.jpg" },
+    { id: '3', title: "Classic Gold Bangle", handle: "classic-gold-bangle", price: "₹32,000", comparePrice: "₹40,000", image: "/images/product/6.jpg" },
+    { id: '4', title: "Diamond Stud Earrings", handle: "diamond-stud-earrings", price: "₹18,000", comparePrice: "₹22,000", image: "/images/product/3.jpg" },
+    { id: '5', title: "Rose Gold Pendant", handle: "rose-gold-pendant", price: "₹12,000", comparePrice: "₹15,000", image: "/images/product/4.jpg" },
+  ];
+
   const SUGGESTIONS = [
     "Marquise Cut Engagement Ring with Halo Setting",
     "Oval Cut Engagement Ring with Halo Setting",
@@ -113,7 +121,7 @@ export default function SearchPopup({ onClose }) {
         </div>
 
         <div className="w-full space-y-12">
-          {/* Trending Search */}
+          {/* Trending Search Section - Always Visible */}
           <section>
             <h3 className="text-base font-semibold mb-4 text-[#1A1A1A]">Trending Search</h3>
             <div className="flex flex-wrap gap-3">
@@ -129,7 +137,58 @@ export default function SearchPopup({ onClose }) {
             </div>
           </section>
 
-          {searchQuery.length > 0 && (
+          {searchQuery.length === 0 ? (
+            /* DEFAULT VIEW: Trending Products & Recently Searched */
+            <div className="space-y-12 animate-in fade-in duration-500">
+               <section>
+                <h3 className="text-base font-semibold mb-6 text-[#1A1A1A]">Trending Products</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                  {TRENDING_PRODUCTS.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/products/${product.handle}`}
+                      className="group"
+                      onClick={onClose}
+                    >
+                      <div className="aspect-square bg-[#F5F5F5] rounded-lg p-4 flex items-center justify-center mb-3 relative overflow-hidden">
+                        <Image
+                          src={product.image}
+                          alt={product.title}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <p className="text-[13px] font-normal text-[#1A1A1A] line-clamp-2 h-9 leading-snug mb-2">
+                        {product.title}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[14px] font-bold text-[#1A1A1A]">{product.price}</span>
+                        {product.comparePrice && (
+                          <span className="text-[12px] text-[#999999] line-through">{product.comparePrice}</span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h3 className="text-base font-semibold mb-4 text-[#1A1A1A]">Recently Searched</h3>
+                <div className="flex flex-wrap gap-3">
+                  {recentSearches.map((item, idx) => (
+                    <button
+                      key={`${item}-${idx}`}
+                      onClick={() => handleSearch(item)}
+                      className="px-5 py-2 rounded-full border border-gray-200 text-sm text-[#4D4D4D] hover:border-[#D4A395] hover:text-[#D4A395] transition-all"
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            </div>
+          ) : (
+            /* SEARCH VIEW: Suggestions & Search Results */
             <>
               {/* Suggestions */}
               <section className="animate-in fade-in slide-in-from-top-2 duration-300">
@@ -182,9 +241,9 @@ export default function SearchPopup({ onClose }) {
                            <HighlightMatch text={product.title} query={searchQuery} />
                         </p>
                         <div className="flex items-center gap-2">
-                          <span className="text-[14px] font-bold text-[#1A1A1A]">₹{product.price}</span>
+                          <span className="text-[14px] font-bold text-[#1A1A1A]">{product.price}</span>
                           {product.comparePrice && (
-                            <span className="text-[12px] text-[#999999] line-through">₹{product.comparePrice}</span>
+                            <span className="text-[12px] text-[#999999] line-through">{product.comparePrice}</span>
                           )}
                         </div>
                       </Link>
@@ -198,22 +257,6 @@ export default function SearchPopup({ onClose }) {
               </section>
             </>
           )}
-
-          {/* Recently Searched */}
-          <section>
-            <h3 className="text-base font-semibold mb-4 text-[#1A1A1A]">Recently Searched</h3>
-            <div className="flex flex-wrap gap-3">
-              {recentSearches.map((item, idx) => (
-                <button
-                  key={`${item}-${idx}`}
-                  onClick={() => handleSearch(item)}
-                  className="px-5 py-2 rounded-full border border-gray-200 text-sm text-[#4D4D4D] hover:border-[#D4A395] hover:text-[#D4A395] transition-all"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </section>
         </div>
       </div>
     </motion.div>
