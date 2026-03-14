@@ -29,6 +29,12 @@ async function fetchAllProducts() {
                 currencyCode
               }
             }
+            compareAtPriceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
           }
         }
       }
@@ -64,6 +70,9 @@ async function run() {
         image: doc.featuredImage?.url,
         price_amount: parseFloat(doc.priceRange.minVariantPrice.amount),
         price_display: `${doc.priceRange.minVariantPrice.amount} ${doc.priceRange.minVariantPrice.currencyCode}`,
+        compare_price_display: doc.compareAtPriceRange?.minVariantPrice?.amount 
+          ? `${doc.compareAtPriceRange.minVariantPrice.amount} ${doc.compareAtPriceRange.minVariantPrice.currencyCode}`
+          : null,
       },
     ]);
 

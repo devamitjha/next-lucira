@@ -72,6 +72,7 @@ export async function GET(req) {
       handle: hit._source.handle,
       image: hit._source.image,
       price: hit._source.price_display,
+      comparePrice: hit._source.compare_price_display,
     }));
 
     return NextResponse.json({ results });
